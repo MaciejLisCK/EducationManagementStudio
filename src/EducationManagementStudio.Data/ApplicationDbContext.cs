@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using EducationManagementStudio.Models;
 using Microsoft.EntityFrameworkCore;
+using EducationManagementStudio.Models.User;
 
 namespace EducationManagementStudio.Data
 {
@@ -15,7 +16,8 @@ namespace EducationManagementStudio.Data
         {
         }
 
-        public DbSet<TestTable> TestTable { get; set; }
-
+        public DbSet<Student> Student { get; set; }
+        public DbSet<Teacher> Teacher { get; set; }
+        public DbSet<StudentGroup> StudentGroup { get; set; }
     }
 }

@@ -46,8 +46,6 @@ namespace EducationManagementStudio
 
             var db = new ApplicationDbContext(dbOptions);
 
-            db.TestTable.Add(new TestTable { TextField = "Hello" });
-            db.SaveChanges();
         }
     }
 }

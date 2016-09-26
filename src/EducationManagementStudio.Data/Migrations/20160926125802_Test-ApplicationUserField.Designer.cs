@@ -8,15 +8,16 @@ using EducationManagementStudio.Data;
 namespace EducationManagementStudio.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160926125802_Test-ApplicationUserField")]
+    partial class TestApplicationUserField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("EducationManagementStudio.Models.User.ApplicationUser", b =>
+            modelBuilder.Entity("EducationManagementStudio.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id");
 
@@ -25,28 +26,14 @@ namespace EducationManagementStudio.Data.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
                     b.Property<string>("Email")
                         .HasAnnotation("MaxLength", 256);
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasAnnotation("MaxLength", 256);
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasAnnotation("MaxLength", 256);
-
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("MiddleName")
-                        .HasAnnotation("MaxLength", 256);
 
                     b.Property<string>("NormalizedEmail")
                         .HasAnnotation("MaxLength", 256);
@@ -61,6 +48,8 @@ namespace EducationManagementStudio.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed");
 
                     b.Property<string>("SecurityStamp");
+
+                    b.Property<string>("TestText");
 
                     b.Property<bool>("TwoFactorEnabled");
 
@@ -77,22 +66,6 @@ namespace EducationManagementStudio.Data.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
-                });
-
-            modelBuilder.Entity("EducationManagementStudio.Models.User.StudentGroup", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasAnnotation("MaxLength", 20);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("StudentGroup");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
@@ -202,34 +175,6 @@ namespace EducationManagementStudio.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("EducationManagementStudio.Models.User.Student", b =>
-                {
-                    b.HasBaseType("EducationManagementStudio.Models.User.ApplicationUser");
-
-                    b.Property<int?>("GroupId")
-                        .IsRequired();
-
-                    b.Property<string>("IndexNumber")
-                        .IsRequired()
-                        .HasAnnotation("MaxLength", 20);
-
-                    b.HasIndex("GroupId");
-
-                    b.ToTable("Student");
-
-                    b.HasDiscriminator().HasValue("Student");
-                });
-
-            modelBuilder.Entity("EducationManagementStudio.Models.User.Teacher", b =>
-                {
-                    b.HasBaseType("EducationManagementStudio.Models.User.ApplicationUser");
-
-
-                    b.ToTable("Teacher");
-
-                    b.HasDiscriminator().HasValue("Teacher");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole")
@@ -240,7 +185,7 @@ namespace EducationManagementStudio.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("EducationManagementStudio.Models.User.ApplicationUser")
+                    b.HasOne("EducationManagementStudio.Models.ApplicationUser")
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -248,7 +193,7 @@ namespace EducationManagementStudio.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("EducationManagementStudio.Models.User.ApplicationUser")
+                    b.HasOne("EducationManagementStudio.Models.ApplicationUser")
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -261,17 +206,9 @@ namespace EducationManagementStudio.Data.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("EducationManagementStudio.Models.User.ApplicationUser")
+                    b.HasOne("EducationManagementStudio.Models.ApplicationUser")
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("EducationManagementStudio.Models.User.Student", b =>
-                {
-                    b.HasOne("EducationManagementStudio.Models.User.StudentGroup", "Group")
-                        .WithMany("Students")
-                        .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
         }

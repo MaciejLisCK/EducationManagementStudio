@@ -8,9 +8,10 @@ using EducationManagementStudio.Data;
 namespace EducationManagementStudio.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160926142345_Add-StudentAndTeacherUser-Fix")]
+    partial class AddStudentAndTeacherUserFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -35,18 +36,18 @@ namespace EducationManagementStudio.Data.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 256);
+                        .HasAnnotation("MaxLength", 250);
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 256);
+                        .HasAnnotation("MaxLength", 250);
 
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
                     b.Property<string>("MiddleName")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasAnnotation("MaxLength", 250);
 
                     b.Property<string>("NormalizedEmail")
                         .HasAnnotation("MaxLength", 256);
