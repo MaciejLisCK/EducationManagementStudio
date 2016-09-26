@@ -10,7 +10,6 @@ namespace EducationManagementStudio.Models.User
     {
         [Required, StringLength(20)]
         public string IndexNumber { get; set; }
-        [Required]
         public StudentGroup Group { get; set; }
     }
 }

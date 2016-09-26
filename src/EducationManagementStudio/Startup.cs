@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EducationManagementStudio.Data;
+using EducationManagementStudio.Models.User;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using EducationManagementStudio.Data;
-using Microsoft.EntityFrameworkCore;
-using EducationManagementStudio.Models;
 
 namespace EducationManagementStudio
 {
@@ -17,24 +14,25 @@ namespace EducationManagementStudio
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=EducationManagementStudio;Trusted_Connection=True;MultipleActiveResultSets=true"));
+            AddDbServices(services);
+            AddIdentityServices(services);
+            services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            DbTest();
             loggerFactory.AddConsole();
 
             if (env.IsDevelopment())
             {
+                loggerFactory.AddDebug();
+
                 app.UseDeveloperExceptionPage();
             }
 
-            app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Hello World!");
-            });
+            app.UseStaticFiles();
+            app.UseIdentity();
+            app.UseMvcWithDefaultRoute();
         }
 
         public void DbTest()
@@ -45,7 +43,25 @@ namespace EducationManagementStudio
             var dbOptions = dbOptionsBuilder.Options;
 
             var db = new ApplicationDbContext(dbOptions);
+        }
 
+        private void AddDbServices(IServiceCollection services)
+        {
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=EducationManagementStudio;Trusted_Connection=True;MultipleActiveResultSets=true"));
+        }
+
+        private void AddIdentityServices(IServiceCollection services)
+        {
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+            services.AddIdentity<Student, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+            services.AddIdentity<Teacher, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
         }
     }
 }
