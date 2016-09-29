@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		global.json = global.json
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "EducationManagementStudio", "src\EducationManagementStudio\EducationManagementStudio.xproj", "{11FA2353-14BD-4DC6-B99F-A33B0668A6BD}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "EducationManagementStudio.Web", "src\EducationManagementStudio.Web\EducationManagementStudio.Web.xproj", "{11FA2353-14BD-4DC6-B99F-A33B0668A6BD}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "EducationManagementStudio.Data", "src\EducationManagementStudio.Data\EducationManagementStudio.Data.xproj", "{700F7AF7-C10E-4901-926B-565B3ED07BF1}"
 EndProject
