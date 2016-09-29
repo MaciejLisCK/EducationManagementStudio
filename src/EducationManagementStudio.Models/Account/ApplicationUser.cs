@@ -4,8 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EducationManagementStudio.Models.User
+namespace EducationManagementStudio.Models.Account
 {
     public class ApplicationUser : IdentityUser
     {
@@ -16,5 +17,22 @@ namespace EducationManagementStudio.Models.User
 
         [StringLength(256)]
         public string MiddleName { get; set; }
+
+        [NotMapped]
+        public string FullName
+        {
+            get
+            {
+                bool hasMiddleName = String.IsNullOrWhiteSpace(MiddleName);
+
+                var fullName = FirstName;
+                if (hasMiddleName)
+                    fullName += " " + MiddleName;
+                fullName += LastName;
+
+                return fullName;
+            }
+
+        }
     }
 }

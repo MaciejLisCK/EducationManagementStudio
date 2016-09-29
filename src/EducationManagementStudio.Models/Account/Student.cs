@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EducationManagementStudio.Models.User
+namespace EducationManagementStudio.Models.Account
 {
     public class Student : ApplicationUser
     {

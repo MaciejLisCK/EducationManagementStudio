@@ -1,0 +1,24 @@
+﻿@using EducationManagementStudio.Models.Account
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    bool isSignedIn = SignInManager.IsSignedIn(User);
+    var user = await UserManager.GetUserAsync(User);
+}
+
+@if (isSignedIn)
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Hello @user.FullName!</a></li>
+        <li><a asp-controller="Account" asp-action="Logout">Logout</a></li>
+    </ul>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li><a asp-controller="Account" asp-action="Login">Login</a></li>
+        <li><a asp-controller="Account" asp-action="RegisterStudent">Register</a></li>
+    </ul>
+}
