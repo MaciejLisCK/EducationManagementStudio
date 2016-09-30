@@ -1,5 +1,6 @@
 ﻿using EducationManagementStudio.Data;
 using EducationManagementStudio.Models.Account;
+using EducationManagementStudio.Models.AccountModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;

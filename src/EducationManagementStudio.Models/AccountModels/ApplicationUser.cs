@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EducationManagementStudio.Models.Account
+namespace EducationManagementStudio.Models.AccountModels
 {
     public class ApplicationUser : IdentityUser
     {

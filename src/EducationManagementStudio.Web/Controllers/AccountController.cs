@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
-using EducationManagementStudio.Models.Account;
 using Microsoft.AspNetCore.Authorization;
 using EducationManagementStudio.Data;
 using Microsoft.EntityFrameworkCore;
 using EducationManagementStudio.Models.Account.ViewModels;
+using EducationManagementStudio.Models.AccountModels;
 
 namespace EducationManagementStudio.Controllers
 {

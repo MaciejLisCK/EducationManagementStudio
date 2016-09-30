@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace EducationManagementStudio.Models.Account
+namespace EducationManagementStudio.Models.AccountModels
 {
     public class StudentGroup
     {

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using EducationManagementStudio.Models.Account;
+using EducationManagementStudio.Models.AccountModels;
 
 namespace EducationManagementStudio.Data
 {
