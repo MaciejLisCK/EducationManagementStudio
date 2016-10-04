@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using EducationManagementStudio.Models.Account;
 using EducationManagementStudio.Models.AccountModels;
+using EducationManagementStudio.Models.CourseModels;
+using EducationManagementStudio.Models.CustomPageModels;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace EducationManagementStudio.Data
 {
@@ -14,6 +17,13 @@ namespace EducationManagementStudio.Data
         public DbSet<Student> Student { get; set; }
         public DbSet<Teacher> Teacher { get; set; }
         public DbSet<StudentGroup> StudentGroup { get; set; }
+
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<CourseToStudent> CourseToStudent { get; set; }
+        public DbSet<CustomPage> CustomPage { get; set; }
+        public DbSet<CustomPageToCustomPageContent> CustomPageToCustomPageContent { get; set; }
+        public DbSet<CustomPageContent> CustomPageContent { get; set; }
+        public DbSet<CustomPagePanelContent> CustomPagePanelContent { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -26,7 +36,9 @@ namespace EducationManagementStudio.Data
             modelBuilder.Entity<StudentGroup>()
                 .HasIndex(b => b.Name)
                 .IsUnique();
+            
+            foreach(var courseToStudentForeignKey in modelBuilder.Entity<CourseToStudent>().Metadata.GetForeignKeys())
+                courseToStudentForeignKey.DeleteBehavior = DeleteBehavior.Restrict;
         }
-
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,8 +10,17 @@ namespace EducationManagementStudio.Models.CustomPageModels
     public class CustomPage
     {
         public int Id { get; set; }
-        public virtual ICollection<CustomPageContent> Contents { get; set; }
         [Required, StringLength(256)]
         public string Title { get; set; }
+        public virtual ICollection<CustomPageToCustomPageContent> CustomPagesToCustomPageContents { get; set; }
+
+        [NotMapped]
+        public IEnumerable<CustomPageContent> Contents
+        {
+            get
+            {
+                return CustomPagesToCustomPageContents.Select(cptcpc => cptcpc.CustomPageContent);                
+            }
+        }
     }
 }
