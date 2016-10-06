@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using EducationManagementStudio.Models.Account;
 using EducationManagementStudio.Models.AccountModels;
 using EducationManagementStudio.Models.CourseModels;
 using EducationManagementStudio.Models.CustomPageModels;
 using Microsoft.EntityFrameworkCore.Metadata;
+using EducationManagementStudio.Models.CustomPageContentModels;
 
 namespace EducationManagementStudio.Data
 {
@@ -24,6 +24,7 @@ namespace EducationManagementStudio.Data
         public DbSet<CustomPageToCustomPageContent> CustomPageToCustomPageContent { get; set; }
         public DbSet<CustomPageContent> CustomPageContent { get; set; }
         public DbSet<CustomPagePanelContent> CustomPagePanelContent { get; set; }
+        public DbSet<CustomPageAlertContent> CustomPageAlertContent { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

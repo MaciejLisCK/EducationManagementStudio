@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using EducationManagementStudio.Data;
 using Microsoft.EntityFrameworkCore;
-using EducationManagementStudio.Models.Account.ViewModels;
-using EducationManagementStudio.Models.AccountModels;
+ using EducationManagementStudio.Models.AccountModels;
+using EducationManagementStudio.Models.AccountModels.ViewModels;
 
 namespace EducationManagementStudio.Controllers
 {
@@ -49,9 +49,9 @@ namespace EducationManagementStudio.Controllers
             {
                 var student = await PrepareRegisterStudentModel(model);
 
-                var createResult = await _studentUserManager.CreateAsync(student, model.Password);
+                var createStudentResult = await _studentUserManager.CreateAsync(student, model.Password);
 
-                if (createResult.Succeeded)
+                if (createStudentResult.Succeeded)
                 {
                     await _signInManager.SignInAsync(student, isPersistent: false);
 
@@ -59,7 +59,49 @@ namespace EducationManagementStudio.Controllers
                 }
                 else
                 {
-                    foreach (var error in createResult.Errors)
+                    foreach (var error in createStudentResult.Errors)
+                        ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+
+            return View(model);
+        }
+
+        [AllowAnonymous]
+        public IActionResult RegisterTeacher()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> RegisterTeacher(RegisterTeacherViewModel model)
+        {
+            if (model.RegisterPassCode != "1031")
+            {
+                ModelState.AddModelError(string.Empty, "Wrong Pass Code");
+                return View(model);
+            }
+
+            if (ModelState.IsValid)
+            {
+                var teacher = new Teacher();
+                teacher.UserName = model.Email;
+                teacher.FirstName = model.FirstName;
+                teacher.LastName = model.LastName;
+                teacher.Email = model.Email;
+
+                var createTeacherResult = await _teacherUserManager.CreateAsync(teacher, model.Password);
+
+                if (createTeacherResult.Succeeded)
+                {
+                    await _signInManager.SignInAsync(teacher, isPersistent: true);
+
+                    return RedirectToAction(nameof(HomeController.Index), "Home");
+                }
+                else
+                {
+                    foreach (var error in createTeacherResult.Errors)
                         ModelState.AddModelError(string.Empty, error.Description);
                 }
             }

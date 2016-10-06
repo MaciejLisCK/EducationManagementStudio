@@ -1,5 +1,4 @@
-﻿using EducationManagementStudio.Models.Account;
-using EducationManagementStudio.Models.AccountModels;
+﻿using EducationManagementStudio.Models.AccountModels;
 using EducationManagementStudio.Models.CustomPageModels;
 using System;
 using System.Collections.Generic;
@@ -18,7 +17,8 @@ namespace EducationManagementStudio.Models.CourseModels
         public virtual ICollection<CourseToStudent> CoursesToStudents { get; set; }
         [Required, StringLength(256)]
         public string Name { get; set; }
-        [Required]
+        [MaxLength]
+        public string Description { get; set; }
         public CustomPage StartPage { get; set; }
 
         [NotMapped]

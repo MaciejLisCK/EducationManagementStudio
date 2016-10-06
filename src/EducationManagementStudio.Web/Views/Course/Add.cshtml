@@ -1,0 +1,35 @@
+﻿@model EducationManagementStudio.Models.CourseModels.ViewModels.AddCourseViewModel
+
+<h1>Add Course</h1>
+<p class="lead">Create a new course</p>
+<hr />
+
+<form asp-controller="Course" asp-action="Add" method="post" class="form-horizontal">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Name" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description" class="col-lg-2 control-label"></label>
+        <div class="col-lg-10">
+            <textarea asp-for="Description" class="form-control" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 214px;"></textarea>
+            <span asp-validation-for="Description" class="help-block"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+    </div>
+</form>
+
+@section scripts {
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
+}
+
+

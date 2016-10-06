@@ -1,0 +1,80 @@
+﻿@model EducationManagementStudio.Models.CustomPageModels.CustomPage
+
+@using EducationManagementStudio.Models.CustomPageModels
+@using EducationManagementStudio.Models.CustomPageContentModels
+
+<h1>@Model.Title</h1>
+<hr />
+
+@foreach (var content in Model.CustomPagesToCustomPageContents.OrderBy(cptcpc => cptcpc.Order).Select(cptcpc => cptcpc.CustomPageContent))
+{
+    if (content is CustomPageAlertContent)
+    {
+        var alertContent = (CustomPageAlertContent)content;
+        string alertTypeValue = String.Empty;
+        if (alertContent.AlertType != null)
+        {
+            var alertTypeName = Enum.GetName(typeof(CustomPageAlertContentType), alertContent.AlertType);
+            alertTypeValue = "alert-" + alertTypeName.ToLower();
+        }
+
+        <div class="alert alert-dismissible @alertTypeValue">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <div class="markdown-line">@alertContent.Content</div>
+        </div>
+    }
+
+    if (content is CustomPagePanelContent)
+    {
+        var panelContent = (CustomPagePanelContent)content;
+
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title markdown-line">@panelContent.Heading</h3>
+            </div>
+            <div class="panel-body markdown-content">@panelContent.Content</div>
+        </div>
+    }
+}
+<div class="alert alert-dismissible alert-success">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Well done!</strong> You successfully read <a href="#" class="alert-link">this important alert message</a>.
+</div>
+<div class="markdown-content">## Title!
+I am using _markdown_. Hellow **World**</div>
+
+
+@section scripts {
+    <script src="~/lib/marked.min.js"></script>
+    <script>
+        ; (function () {
+            applyLineMarkdown('markdown-line');
+            applyContentMarkdown('markdown-content');
+
+            function applyLineMarkdown(className) {
+                var lineRenderer = new marked.Renderer();
+                lineRenderer.paragraph = function (text, level) { return text; }
+                markedLineOptions = { renderer: lineRenderer };
+
+                var markdownLineElements = document.getElementsByClassName(className);
+                for (var i = 0; i < markdownLineElements.length; i++) {
+                    var markdownLineElement = markdownLineElements[i];
+                    var markdownLineElementContent = markdownLineElement.innerHTML;
+                    var markdownLineElementContentProcessed = marked(markdownLineElementContent, markedLineOptions);
+                    markdownLineElement.innerHTML = markdownLineElementContentProcessed;
+                }
+            }
+
+            function applyContentMarkdown(className) {
+                var markdownContentElements = document.getElementsByClassName(className);
+                for (var i = 0; i < markdownContentElements.length; i++) {
+                    var markdownContentElement = markdownContentElements[i];
+                    var markdownContentElementContent = markdownContentElement.innerHTML;
+                    var markdownContentElementContentProcessed = marked(markdownContentElementContent);
+
+                    markdownContentElement.innerHTML = markdownContentElementContentProcessed;
+                }
+            }
+        })();
+    </script>
+}

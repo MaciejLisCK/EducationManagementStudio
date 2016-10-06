@@ -1,18 +1,20 @@
-﻿using EducationManagementStudio.Data;
-using EducationManagementStudio.Models.Account;
+﻿using System;
+using EducationManagementStudio.Data;
 using EducationManagementStudio.Models.AccountModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity;
 
 namespace EducationManagementStudio
 {
     public class Startup
     {
+        private const string DbConnectionString = "Server=(localdb)\\mssqllocaldb;Database=EducationManagementStudio;Trusted_Connection=True;MultipleActiveResultSets=true";
+
         public void ConfigureServices(IServiceCollection services)
         {
             AddDbServices(services);
@@ -36,20 +38,10 @@ namespace EducationManagementStudio
             app.UseMvcWithDefaultRoute();
         }
 
-        public void DbTest()
-        {
-            var sqlDatabaseString = "Server=(localdb)\\mssqllocaldb;Database=EducationManagementStudio;Trusted_Connection=True;MultipleActiveResultSets=true";
-            var dbOptionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            dbOptionsBuilder.UseSqlServer(sqlDatabaseString);
-            var dbOptions = dbOptionsBuilder.Options;
-
-            var db = new ApplicationDbContext(dbOptions);
-        }
-
         private void AddDbServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=EducationManagementStudio;Trusted_Connection=True;MultipleActiveResultSets=true"));
+                options.UseSqlServer(DbConnectionString));
         }
 
         private void AddIdentityServices(IServiceCollection services)
@@ -63,6 +55,17 @@ namespace EducationManagementStudio
             services.AddIdentity<Teacher, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+        }
+
+        private ApplicationDbContext GetDbContext()
+        {
+            var dbOptionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            dbOptionsBuilder.UseSqlServer(DbConnectionString);
+            var dbOptions = dbOptionsBuilder.Options;
+
+            var db = new ApplicationDbContext(dbOptions);
+
+            return db;
         }
     }
 }

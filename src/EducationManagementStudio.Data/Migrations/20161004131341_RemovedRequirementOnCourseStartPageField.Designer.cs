@@ -8,9 +8,10 @@ using EducationManagementStudio.Data;
 namespace EducationManagementStudio.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161004131341_RemovedRequirementOnCourseStartPageField")]
+    partial class RemovedRequirementOnCourseStartPageField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -106,8 +107,6 @@ namespace EducationManagementStudio.Data.Migrations
                     b.Property<string>("CreatorId")
                         .IsRequired();
 
-                    b.Property<string>("Description");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasAnnotation("MaxLength", 256);
@@ -143,21 +142,6 @@ namespace EducationManagementStudio.Data.Migrations
                     b.ToTable("CourseToStudent");
                 });
 
-            modelBuilder.Entity("EducationManagementStudio.Models.CustomPageContentModels.CustomPageContent", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CustomPageContent");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("CustomPageContent");
-                });
-
             modelBuilder.Entity("EducationManagementStudio.Models.CustomPageModels.CustomPage", b =>
                 {
                     b.Property<int>("Id")
@@ -170,6 +154,21 @@ namespace EducationManagementStudio.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CustomPage");
+                });
+
+            modelBuilder.Entity("EducationManagementStudio.Models.CustomPageModels.CustomPageContent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CustomPageContent");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("CustomPageContent");
                 });
 
             modelBuilder.Entity("EducationManagementStudio.Models.CustomPageModels.CustomPageToCustomPageContent", b =>
@@ -327,23 +326,9 @@ namespace EducationManagementStudio.Data.Migrations
                     b.HasDiscriminator().HasValue("Teacher");
                 });
 
-            modelBuilder.Entity("EducationManagementStudio.Models.CustomPageContentModels.CustomPageAlertContent", b =>
+            modelBuilder.Entity("EducationManagementStudio.Models.CustomPageModels.CustomPagePanelContent", b =>
                 {
-                    b.HasBaseType("EducationManagementStudio.Models.CustomPageContentModels.CustomPageContent");
-
-                    b.Property<int?>("AlertType");
-
-                    b.Property<string>("Content")
-                        .IsRequired();
-
-                    b.ToTable("CustomPageAlertContent");
-
-                    b.HasDiscriminator().HasValue("CustomPageAlertContent");
-                });
-
-            modelBuilder.Entity("EducationManagementStudio.Models.CustomPageContentModels.CustomPagePanelContent", b =>
-                {
-                    b.HasBaseType("EducationManagementStudio.Models.CustomPageContentModels.CustomPageContent");
+                    b.HasBaseType("EducationManagementStudio.Models.CustomPageModels.CustomPageContent");
 
                     b.Property<string>("Content")
                         .IsRequired();
@@ -380,7 +365,7 @@ namespace EducationManagementStudio.Data.Migrations
 
             modelBuilder.Entity("EducationManagementStudio.Models.CustomPageModels.CustomPageToCustomPageContent", b =>
                 {
-                    b.HasOne("EducationManagementStudio.Models.CustomPageContentModels.CustomPageContent", "CustomPageContent")
+                    b.HasOne("EducationManagementStudio.Models.CustomPageModels.CustomPageContent", "CustomPageContent")
                         .WithMany("CustomPagesToCustomPageContents")
                         .HasForeignKey("CustomPageContentId")
                         .OnDelete(DeleteBehavior.Cascade);

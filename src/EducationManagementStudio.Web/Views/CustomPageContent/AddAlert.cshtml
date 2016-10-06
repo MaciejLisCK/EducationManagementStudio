@@ -1,0 +1,28 @@
+﻿@model EducationManagementStudio.Models.CustomPageContentModels.ViewModels.CustomPageAlertContentViewModel
+
+<h1>Add Alert Content</h1>
+<p class="lead">Create a new Alert Content</p>
+<hr />
+
+<form asp-controller="CustomPageContent" asp-action="AddAlert" method="post" class="form-horizontal">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Content" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="Content" class="form-control" />
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="AlertType" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="AlertType" class="form-control" />
+            <span asp-validation-for="AlertType" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+    </div>
+</form>
