@@ -4,12 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EducationManagementStudio.Models.CustomPageContentModels
+namespace EducationManagementStudio.Models.CustomContentModels
 {
-    public class CustomPageAlertContent : CustomPageContent
+    public class CustomContentPanel : CustomContent
     {
+        public string Heading { get; set; }
         [Required]
         public string Content { get; set; }
-        public CustomPageAlertContentType? AlertType { get; set; }
     }
 }

@@ -8,8 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using EducationManagementStudio.Models.CustomPageModels.ViewModels;
 using EducationManagementStudio.Models.CustomPageModels;
 
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace EducationManagementStudio.Controllers
 {
     public class CustomPageController : Controller
@@ -25,8 +23,8 @@ namespace EducationManagementStudio.Controllers
         public async Task<IActionResult> View(int id)
         {
             var customPage = await _db.CustomPage
-                .Include(cp => cp.CustomPagesToCustomPageContents)
-                .ThenInclude(cptcpc => cptcpc.CustomPageContent) 
+                .Include(cp => cp.CustomPagesToCustomContents)
+                .ThenInclude(cptcpc => cptcpc.CustomContent) 
                 .SingleAsync(cp => cp.Id == id);
 
             return View(customPage);

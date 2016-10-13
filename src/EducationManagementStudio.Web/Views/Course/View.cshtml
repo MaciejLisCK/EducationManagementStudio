@@ -1,5 +1,8 @@
 ﻿@model EducationManagementStudio.Models.CourseModels.Course
 
+@using EducationManagementStudio.Models.CustomPageModels
+
+
 <h1>@Model.Name</h1>
 <p class="lead">@Model.Description</p>
 <hr />
@@ -21,7 +24,7 @@
 <table class="table table-hover table-bordered">
     <thead>
         <tr>
-            <th class="col-md-8">Temat</th>
+            <th class="col-md-6">Temat</th>
             <th>Wejściówka</th>
             <th>Laboratorium</th>
             <th>Sprawozdanie</th>
@@ -32,12 +35,33 @@
         @foreach (var currentClass in Model.Classes)
         {
             <tr>
-                <td>@currentClass.Topic</td>
+                <td data-markdown="line" class="text-justify">@currentClass.Topic</td>
                 <td>@currentClass.Test?.Title</td>
-                <td>@currentClass.Exercise?.Title</td>
+                <td class="text-center" style="vertical-align: middle;">@RenderCustomPageLink(currentClass.Exercise)</td>
                 <td>@currentClass.Report?.Title</td>
                 <td>@currentClass.NextClasses?.Title</td>
             </tr>
         }
     </tbody>
 </table>
+
+
+
+@await Html.PartialAsync("_CustomContent", new List<EducationManagementStudio.Models.CustomContentModels.CustomContent>())
+
+
+
+@functions {
+    public IHtmlContent RenderCustomPageLink(CustomPage customPage)
+    {
+        var buttonTemplate = "<a class='btn btn-primary btn-xs text-center {0}' role='button' href='{1}'>Rozpocznij</a>";
+        var buttonHtml = String.Empty;
+
+        if (customPage == null)
+            buttonHtml = String.Format(buttonTemplate, "disabled", "");
+        else
+            buttonHtml = String.Format(buttonTemplate, "", $"/CustomPage/View/{customPage.Id}");
+
+        return Html.Raw(buttonHtml);
+    }
+}

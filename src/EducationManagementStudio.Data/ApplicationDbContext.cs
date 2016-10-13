@@ -8,7 +8,7 @@ using EducationManagementStudio.Models.AccountModels;
 using EducationManagementStudio.Models.CourseModels;
 using EducationManagementStudio.Models.CustomPageModels;
 using Microsoft.EntityFrameworkCore.Metadata;
-using EducationManagementStudio.Models.CustomPageContentModels;
+using EducationManagementStudio.Models.CustomContentModels;
 
 namespace EducationManagementStudio.Data
 {
@@ -22,10 +22,10 @@ namespace EducationManagementStudio.Data
         public DbSet<CourseToStudent> CourseToStudent { get; set; }
         public DbSet<CourseToGroup> CourseToGroup { get; set; }
         public DbSet<CustomPage> CustomPage { get; set; }
-        public DbSet<CustomPageToCustomPageContent> CustomPageToCustomPageContent { get; set; }
-        public DbSet<CustomPageContent> CustomPageContent { get; set; }
-        public DbSet<CustomPagePanelContent> CustomPagePanelContent { get; set; }
-        public DbSet<CustomPageAlertContent> CustomPageAlertContent { get; set; }
+        public DbSet<CustomPageToCustomContent> CustomPageToCustomContent { get; set; }
+        public DbSet<CustomContent> CustomContent { get; set; }
+        public DbSet<CustomContentPanel> CustomPagePanelContent { get; set; }
+        public DbSet<CustomContentAlert> CustomPageAlertContent { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

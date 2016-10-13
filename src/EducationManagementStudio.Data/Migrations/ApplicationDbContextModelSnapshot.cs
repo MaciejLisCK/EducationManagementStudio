@@ -194,7 +194,7 @@ namespace EducationManagementStudio.Data.Migrations
                     b.ToTable("CourseToStudent");
                 });
 
-            modelBuilder.Entity("EducationManagementStudio.Models.CustomPageContentModels.CustomPageContent", b =>
+            modelBuilder.Entity("EducationManagementStudio.Models.CustomContentModels.CustomContent", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -204,9 +204,9 @@ namespace EducationManagementStudio.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CustomPageContent");
+                    b.ToTable("CustomContent");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("CustomPageContent");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("CustomContent");
                 });
 
             modelBuilder.Entity("EducationManagementStudio.Models.CustomPageModels.CustomPage", b =>
@@ -223,12 +223,12 @@ namespace EducationManagementStudio.Data.Migrations
                     b.ToTable("CustomPage");
                 });
 
-            modelBuilder.Entity("EducationManagementStudio.Models.CustomPageModels.CustomPageToCustomPageContent", b =>
+            modelBuilder.Entity("EducationManagementStudio.Models.CustomPageModels.CustomPageToCustomContent", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("CustomPageContentId")
+                    b.Property<int?>("CustomContentId")
                         .IsRequired();
 
                     b.Property<int>("CustomPageId");
@@ -237,11 +237,11 @@ namespace EducationManagementStudio.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomPageContentId");
+                    b.HasIndex("CustomContentId");
 
                     b.HasIndex("CustomPageId");
 
-                    b.ToTable("CustomPageToCustomPageContent");
+                    b.ToTable("CustomPageToCustomContent");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
@@ -381,32 +381,32 @@ namespace EducationManagementStudio.Data.Migrations
                     b.HasDiscriminator().HasValue("Teacher");
                 });
 
-            modelBuilder.Entity("EducationManagementStudio.Models.CustomPageContentModels.CustomPageAlertContent", b =>
+            modelBuilder.Entity("EducationManagementStudio.Models.CustomContentModels.CustomContentAlert", b =>
                 {
-                    b.HasBaseType("EducationManagementStudio.Models.CustomPageContentModels.CustomPageContent");
+                    b.HasBaseType("EducationManagementStudio.Models.CustomContentModels.CustomContent");
 
                     b.Property<int?>("AlertType");
 
                     b.Property<string>("Content")
                         .IsRequired();
 
-                    b.ToTable("CustomPageAlertContent");
+                    b.ToTable("CustomContentAlert");
 
-                    b.HasDiscriminator().HasValue("CustomPageAlertContent");
+                    b.HasDiscriminator().HasValue("CustomContentAlert");
                 });
 
-            modelBuilder.Entity("EducationManagementStudio.Models.CustomPageContentModels.CustomPagePanelContent", b =>
+            modelBuilder.Entity("EducationManagementStudio.Models.CustomContentModels.CustomContentPanel", b =>
                 {
-                    b.HasBaseType("EducationManagementStudio.Models.CustomPageContentModels.CustomPageContent");
+                    b.HasBaseType("EducationManagementStudio.Models.CustomContentModels.CustomContent");
 
                     b.Property<string>("Content")
                         .IsRequired();
 
                     b.Property<string>("Heading");
 
-                    b.ToTable("CustomPagePanelContent");
+                    b.ToTable("CustomContentPanel");
 
-                    b.HasDiscriminator().HasValue("CustomPagePanelContent");
+                    b.HasDiscriminator().HasValue("CustomContentPanel");
                 });
 
             modelBuilder.Entity("EducationManagementStudio.Models.ClassModels.Class", b =>
@@ -462,15 +462,15 @@ namespace EducationManagementStudio.Data.Migrations
                         .HasForeignKey("StudentId");
                 });
 
-            modelBuilder.Entity("EducationManagementStudio.Models.CustomPageModels.CustomPageToCustomPageContent", b =>
+            modelBuilder.Entity("EducationManagementStudio.Models.CustomPageModels.CustomPageToCustomContent", b =>
                 {
-                    b.HasOne("EducationManagementStudio.Models.CustomPageContentModels.CustomPageContent", "CustomPageContent")
-                        .WithMany("CustomPagesToCustomPageContents")
-                        .HasForeignKey("CustomPageContentId")
+                    b.HasOne("EducationManagementStudio.Models.CustomContentModels.CustomContent", "CustomContent")
+                        .WithMany("CustomPagesToCustomContents")
+                        .HasForeignKey("CustomContentId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("EducationManagementStudio.Models.CustomPageModels.CustomPage", "CustomPage")
-                        .WithMany("CustomPagesToCustomPageContents")
+                        .WithMany("CustomPagesToCustomContents")
                         .HasForeignKey("CustomPageId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

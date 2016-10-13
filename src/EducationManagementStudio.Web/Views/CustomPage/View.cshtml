@@ -1,60 +1,10 @@
 ﻿@model EducationManagementStudio.Models.CustomPageModels.CustomPage
 
 @using EducationManagementStudio.Models.CustomPageModels
-@using EducationManagementStudio.Models.CustomPageContentModels
+@using EducationManagementStudio.Models.CustomContentModels
 
 <h1>@Model.Title</h1>
 <hr />
 
-@await Html.PartialAsync("_CustomContent", Model.CustomPagesToCustomPageContents.OrderBy(cptcpc => cptcpc.Order).Select(cptcpc => cptcpc.CustomPageContent).ToList())
-
-<table class="table table-hover table-bordered">
-    <thead>
-        <tr>
-            <th class="col-md-1">#</th>
-            <th class="col-md-8">Temat</th>
-            <th >Wejściówka</th>
-            <th>Laboratorium</th>
-            <th >Sprawozdanie</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>1-2</td>
-            <td>
-                Wprowadzenie do komputera LABSAG, Mikroprogram pobrania rozkazu dla rozkazów w formacie zwykłym, które wykorzystują adresowanie bezpośrednie.
-            </td>
-            <td><span class="badge">3.5</span></td>
-            <td><span class="badge">5</span></td>
-            <td><span class="badge">2</span></td>
-        <tr>
-            <td>3-4</td>
-            <td>
-                Mikroprogram pobrania rozkazu dla rozkazów w formacie zwykłym, które wykorzystują adresowanie pośrednie oraz dla rozkazów w formacie rozszerzonym
-            </td>
-            <td><span class="badge">4</span></td>
-            <td><span class="badge">2</span></td>
-            <td><span class="badge">3.5</span></td>
-        </tr>
-        <tr>
-            <td>5-6</td>
-            <td>
-                Mikroprogramy rozkazów przesłań i arytmetycznych.
-            </td>
-            <td><span class="badge">3</span></td>
-            <td><span class="badge">3.5</span></td>
-            <td><span class="badge">3</span></td>
-        </tr>
-        <tr>
-            <td>7-8</td>
-            <td>
-                Mikroprogramy rozkazów logicznych i skoków
-            </td>
-            <td><span class="badge">2</span></td>
-            <td><span class="badge">4.5</span></td>
-            <td><span class="badge">5</span></td>
-        </tr>
-    </tbody>
-</table>
-
+@await Html.PartialAsync("_CustomContent", Model.CustomPagesToCustomContents.OrderBy(cptcpc => cptcpc.Order).Select(cptcpc => cptcpc.CustomContent).ToList())
 

@@ -1,4 +1,4 @@
-﻿using EducationManagementStudio.Models.CustomPageContentModels;
+﻿using EducationManagementStudio.Models.CustomContentModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,14 +13,14 @@ namespace EducationManagementStudio.Models.CustomPageModels
         public int Id { get; set; }
         [Required, StringLength(256)]
         public string Title { get; set; }
-        public virtual ICollection<CustomPageToCustomPageContent> CustomPagesToCustomPageContents { get; set; }
+        public virtual ICollection<CustomPageToCustomContent> CustomPagesToCustomContents { get; set; }
 
         [NotMapped]
-        public IEnumerable<CustomPageContent> Contents
+        public IEnumerable<CustomContent> Contents
         {
             get
             {
-                return CustomPagesToCustomPageContents.Select(cptcpc => cptcpc.CustomPageContent);                
+                return CustomPagesToCustomContents.Select(cptcpc => cptcpc.CustomContent);                
             }
         }
     }

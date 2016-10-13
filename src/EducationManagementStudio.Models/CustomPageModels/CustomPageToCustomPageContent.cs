@@ -1,4 +1,4 @@
-﻿using EducationManagementStudio.Models.CustomPageContentModels;
+﻿using EducationManagementStudio.Models.CustomContentModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace EducationManagementStudio.Models.CustomPageModels
 {
-    public class CustomPageToCustomPageContent
+    public class CustomPageToCustomContent
     {
         public int Id { get; set; }
         [Required]
         public CustomPage CustomPage { get; set; }
         [Required]
-        public CustomPageContent CustomPageContent { get; set; }
+        public CustomContent CustomContent { get; set; }
         public int Order { get; set; }
     }
 }

@@ -1,16 +1,16 @@
-﻿@model List<EducationManagementStudio.Models.CustomPageContentModels.CustomPageContent>
+﻿@model List<EducationManagementStudio.Models.CustomContentModels.CustomContent>
 
-@using EducationManagementStudio.Models.CustomPageContentModels
+@using EducationManagementStudio.Models.CustomContentModels
 
 @foreach (var content in Model)
 {
-    if (content is CustomPageAlertContent)
+    if (content is CustomContentAlert)
     {
-        var alertContent = (CustomPageAlertContent)content;
+        var alertContent = (CustomContentAlert)content;
         string alertTypeValue = String.Empty;
         if (alertContent.AlertType != null)
         {
-            var alertTypeName = Enum.GetName(typeof(CustomPageAlertContentType), alertContent.AlertType);
+            var alertTypeName = Enum.GetName(typeof(CustomContentAlertType), alertContent.AlertType);
             alertTypeValue = "alert-" + alertTypeName.ToLower();
         }
 
@@ -20,9 +20,9 @@
         </div>
     }
 
-    if (content is CustomPagePanelContent)
+    if (content is CustomContentPanel)
     {
-        var panelContent = (CustomPagePanelContent)content;
+        var panelContent = (CustomContentPanel)content;
 
         <div class="panel panel-info">
             <div class="panel-heading">

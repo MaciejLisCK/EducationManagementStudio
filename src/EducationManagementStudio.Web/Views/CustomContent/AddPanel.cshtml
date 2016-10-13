@@ -1,10 +1,10 @@
-﻿@model EducationManagementStudio.Models.CustomPageContentModels.ViewModels.CustomPagePanelContentViewModel
+﻿@model EducationManagementStudio.Models.CustomContentModels.ViewModels.CustomContentPanelViewModel
 
 <h1>Add Panel Content</h1>
 <p class="lead">Create a new Panel Content</p>
 <hr />
 
-<form asp-controller="CustomPageContent" asp-action="AddPanel" method="post" class="form-horizontal">
+<form asp-controller="CustomContent" asp-action="AddPanel" method="post" class="form-horizontal">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
         <label asp-for="Heading" class="col-md-2 control-label"></label>

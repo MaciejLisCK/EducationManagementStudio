@@ -5,11 +5,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EducationManagementStudio.Models.CustomPageContentModels
+namespace EducationManagementStudio.Models.CustomContentModels
 {
-    public class CustomPageContent
+    public class CustomContent
     {
         public int Id { get; set; }
-        public virtual ICollection<CustomPageToCustomPageContent> CustomPagesToCustomPageContents { get; set; }
+        public virtual ICollection<CustomPageToCustomContent> CustomPagesToCustomContents { get; set; }
     }
 }

@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using EducationManagementStudio.Models.CustomPageContentModels.ViewModels;
+using EducationManagementStudio.Models.CustomContentModels.ViewModels;
 using EducationManagementStudio.Data;
-using EducationManagementStudio.Models.CustomPageContentModels;
+using EducationManagementStudio.Models.CustomContentModels;
 using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace EducationManagementStudio.Controllers
 {
-    public class CustomPageContentController : Controller
+    public class CustomContentController : Controller
     {
         private readonly ApplicationDbContext _db;
 
-        public CustomPageContentController(
+        public CustomContentController(
             ApplicationDbContext db)
         {
             _db = db;
@@ -28,12 +28,12 @@ namespace EducationManagementStudio.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddPanel(CustomPagePanelContentViewModel model)
+        public async Task<IActionResult> AddPanel(CustomContentPanelViewModel model)
         {
             if(!ModelState.IsValid)
                 return View(model);
 
-            var panelContent = new CustomPagePanelContent();
+            var panelContent = new CustomContentPanel();
             panelContent.Heading = model.Heading;
             panelContent.Content = model.Content;
 
@@ -52,7 +52,7 @@ namespace EducationManagementStudio.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditPanel(int id, CustomPagePanelContent panelContent)
+        public async Task<IActionResult> EditPanel(int id, CustomContentPanel panelContent)
         {
             if (!ModelState.IsValid)
                 return View(panelContent);
@@ -70,12 +70,12 @@ namespace EducationManagementStudio.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddAlert(CustomPageAlertContentViewModel model)
+        public async Task<IActionResult> AddAlert(CustomContentAlertViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
-            var alertContent = new CustomPageAlertContent();
+            var alertContent = new CustomContentAlert();
             alertContent.Content = model.Content;
             alertContent.AlertType = model.AlertType;
 
