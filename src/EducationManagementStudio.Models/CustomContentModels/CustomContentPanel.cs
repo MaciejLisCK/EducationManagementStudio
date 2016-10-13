@@ -11,5 +11,6 @@ namespace EducationManagementStudio.Models.CustomContentModels
         public string Heading { get; set; }
         [Required]
         public string Content { get; set; }
+        public CustomContentPanelType PanelType { get; set; }
     }
 }

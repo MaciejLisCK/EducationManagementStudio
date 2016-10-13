@@ -1,5 +1,6 @@
 ﻿using EducationManagementStudio.Models.AccountModels;
 using EducationManagementStudio.Models.ClassModels;
+using EducationManagementStudio.Models.CustomContentModels;
 using EducationManagementStudio.Models.CustomPageModels;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace EducationManagementStudio.Models.CourseModels
         [MaxLength]
         public string Description { get; set; }
 
+        public virtual ICollection<CustomContent> CustomContentDescription { get; set; }
         public virtual ICollection<CourseToStudent> CoursesToStudents { get; set; }
         public virtual ICollection<CourseToGroup> CoursesToGroups { get; set; }
         public virtual ICollection<Class> Classes { get; set; }

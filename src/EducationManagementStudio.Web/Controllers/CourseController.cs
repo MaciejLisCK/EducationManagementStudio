@@ -40,6 +40,7 @@ namespace EducationManagementStudio.Controllers
         public IActionResult View(int id)
         {
             var course = _db.Courses
+                .Include(c => c.CustomContentDescription)
                 .Include(c => c.Classes).ThenInclude(c => c.Test)
                 .Include(c => c.Classes).ThenInclude(c => c.Exercise)
                 .Include(c => c.Classes).ThenInclude(c => c.Report)

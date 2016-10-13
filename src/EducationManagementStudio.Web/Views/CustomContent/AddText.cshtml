@@ -1,21 +1,12 @@
-﻿@model EducationManagementStudio.Models.CustomContentModels.CustomContentAlert
+﻿@model EducationManagementStudio.Models.CustomContentModels.CustomContentText
 
-@using EducationManagementStudio.Models.CustomContentModels
-
-<form asp-controller="CustomContent" asp-action="AddAlert" method="post" class="form-horizontal">
+<form asp-controller="CustomContent" asp-action="AddText" method="post" class="form-horizontal">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
         <label asp-for="Content" class="col-md-2 control-label"></label>
         <div class="col-md-10">
             <textarea asp-for="Content" class="form-control" rows="15"></textarea>
             <span asp-validation-for="Content" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label asp-for="AlertType" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <select class="form-control" asp-for="AlertType" asp-items="Html.GetEnumSelectList<CustomContentAlertType>()">
-            </select> 
         </div>
     </div>
     <div class="form-group">

@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using EducationManagementStudio.Models.CustomContentModels.ViewModels;
 using EducationManagementStudio.Data;
 using EducationManagementStudio.Models.CustomContentModels;
 using Microsoft.EntityFrameworkCore;
-
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace EducationManagementStudio.Controllers
 {
@@ -28,14 +25,10 @@ namespace EducationManagementStudio.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddPanel(CustomContentPanelViewModel model)
+        public async Task<IActionResult> AddPanel(CustomContentPanel panelContent)
         {
             if(!ModelState.IsValid)
-                return View(model);
-
-            var panelContent = new CustomContentPanel();
-            panelContent.Heading = model.Heading;
-            panelContent.Content = model.Content;
+                return View(panelContent);
 
             _db.CustomPagePanelContent.Add(panelContent);
 
@@ -70,16 +63,30 @@ namespace EducationManagementStudio.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddAlert(CustomContentAlertViewModel model)
+        public async Task<IActionResult> AddAlert(CustomContentAlert alertContent)
         {
             if (!ModelState.IsValid)
-                return View(model);
-
-            var alertContent = new CustomContentAlert();
-            alertContent.Content = model.Content;
-            alertContent.AlertType = model.AlertType;
+                return View(alertContent);
 
             _db.CustomPageAlertContent.Add(alertContent);
+
+            await _db.SaveChangesAsync();
+
+            return View();
+        }
+
+        public IActionResult AddText()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddText(CustomContentText textContent)
+        {
+            if (!ModelState.IsValid)
+                return View(textContent);
+
+            _db.CustomPageTextContent.Add(textContent);
 
             await _db.SaveChangesAsync();
 

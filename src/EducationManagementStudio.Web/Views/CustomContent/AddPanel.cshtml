@@ -1,8 +1,4 @@
-﻿@model EducationManagementStudio.Models.CustomContentModels.ViewModels.CustomContentPanelViewModel
-
-<h1>Add Panel Content</h1>
-<p class="lead">Create a new Panel Content</p>
-<hr />
+﻿@model EducationManagementStudio.Models.CustomContentModels.CustomContentPanel
 
 <form asp-controller="CustomContent" asp-action="AddPanel" method="post" class="form-horizontal">
     <div asp-validation-summary="All" class="text-danger"></div>
@@ -18,6 +14,12 @@
         <div class="col-md-10">
             <textarea asp-for="Content" class="form-control" rows="15"></textarea>
             <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="PanelType" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <select class="form-control" asp-for="PanelType" asp-items="Html.GetEnumSelectList<CustomContentPanelType>()"></select>
         </div>
     </div>
     <div class="form-group">

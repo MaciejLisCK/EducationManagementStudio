@@ -21,14 +21,18 @@
     </div>
 </div>
 
+
+@await Html.PartialAsync("_CustomContent", Model.CustomContentDescription.ToList())
+
+
 <table class="table table-hover table-bordered">
     <thead>
         <tr>
-            <th class="col-md-6">Temat</th>
+            <th class="col-md-6">Temat laboratoriów</th>
             <th>Wejściówka</th>
             <th>Laboratorium</th>
             <th>Sprawozdanie</th>
-            <th>Następne zajęcia</th>
+            <th>Zakres materiału</th>
         </tr>
     </thead>
     <tbody>
@@ -36,10 +40,10 @@
         {
             <tr>
                 <td data-markdown="line" class="text-justify">@currentClass.Topic</td>
-                <td>@currentClass.Test?.Title</td>
+                <td class="text-center" style="vertical-align: middle;">@RenderCustomPageLink(currentClass.Test)</td>
                 <td class="text-center" style="vertical-align: middle;">@RenderCustomPageLink(currentClass.Exercise)</td>
-                <td>@currentClass.Report?.Title</td>
-                <td>@currentClass.NextClasses?.Title</td>
+                <td class="text-center" style="vertical-align: middle;">@RenderCustomPageLink(currentClass.Report)</td>
+                <td class="text-center" style="vertical-align: middle;">@RenderCustomPageLink(currentClass.NextClasses)</td>
             </tr>
         }
     </tbody>
@@ -47,20 +51,18 @@
 
 
 
-@await Html.PartialAsync("_CustomContent", new List<EducationManagementStudio.Models.CustomContentModels.CustomContent>())
-
 
 
 @functions {
     public IHtmlContent RenderCustomPageLink(CustomPage customPage)
     {
-        var buttonTemplate = "<a class='btn btn-primary btn-xs text-center {0}' role='button' href='{1}'>Rozpocznij</a>";
+        var buttonTemplate = "<a class='btn btn-xs text-center {0}' role='button' href='{1}'>Rozpocznij</a>";
         var buttonHtml = String.Empty;
 
         if (customPage == null)
-            buttonHtml = String.Format(buttonTemplate, "disabled", "");
+            buttonHtml = String.Format(buttonTemplate, "btn-primary disabled", "");
         else
-            buttonHtml = String.Format(buttonTemplate, "", $"/CustomPage/View/{customPage.Id}");
+            buttonHtml = String.Format(buttonTemplate, "btn-primary", $"/CustomPage/View/{customPage.Id}");
 
         return Html.Raw(buttonHtml);
     }

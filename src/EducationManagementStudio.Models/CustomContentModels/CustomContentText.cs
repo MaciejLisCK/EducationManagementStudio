@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace EducationManagementStudio.Models.CustomContentModels
 {
-    public class CustomContentAlert : CustomContent
+    public class CustomContentText : CustomContent
     {
         [Required]
         public string Content { get; set; }
-        public CustomContentAlertType AlertType { get; set; }
     }
 }

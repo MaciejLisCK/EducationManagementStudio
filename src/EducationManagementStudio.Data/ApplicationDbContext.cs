@@ -24,6 +24,7 @@ namespace EducationManagementStudio.Data
         public DbSet<CustomPage> CustomPage { get; set; }
         public DbSet<CustomPageToCustomContent> CustomPageToCustomContent { get; set; }
         public DbSet<CustomContent> CustomContent { get; set; }
+        public DbSet<CustomContentText> CustomPageTextContent { get; set; }
         public DbSet<CustomContentPanel> CustomPagePanelContent { get; set; }
         public DbSet<CustomContentAlert> CustomPageAlertContent { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using EducationManagementStudio.Models.CustomPageModels;
+﻿using EducationManagementStudio.Models.CourseModels;
+using EducationManagementStudio.Models.CustomPageModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,5 +12,6 @@ namespace EducationManagementStudio.Models.CustomContentModels
     {
         public int Id { get; set; }
         public virtual ICollection<CustomPageToCustomContent> CustomPagesToCustomContents { get; set; }
+        public Course CourseCustomDescription { get; set; }
     }
 }

@@ -8,9 +8,10 @@ using EducationManagementStudio.Data;
 namespace EducationManagementStudio.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161013171601_Added-TextContent-Added-To-PanelContent-Type")]
+    partial class AddedTextContentAddedToPanelContentType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")

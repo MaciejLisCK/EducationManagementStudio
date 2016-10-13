@@ -8,9 +8,10 @@ using EducationManagementStudio.Data;
 namespace EducationManagementStudio.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161013164956_Added-To-Course-CustomContentDescription")]
+    partial class AddedToCourseCustomContentDescription
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -389,7 +390,7 @@ namespace EducationManagementStudio.Data.Migrations
                 {
                     b.HasBaseType("EducationManagementStudio.Models.CustomContentModels.CustomContent");
 
-                    b.Property<int>("AlertType");
+                    b.Property<int?>("AlertType");
 
                     b.Property<string>("Content")
                         .IsRequired();
@@ -408,23 +409,9 @@ namespace EducationManagementStudio.Data.Migrations
 
                     b.Property<string>("Heading");
 
-                    b.Property<int>("PanelType");
-
                     b.ToTable("CustomContentPanel");
 
                     b.HasDiscriminator().HasValue("CustomContentPanel");
-                });
-
-            modelBuilder.Entity("EducationManagementStudio.Models.CustomContentModels.CustomContentText", b =>
-                {
-                    b.HasBaseType("EducationManagementStudio.Models.CustomContentModels.CustomContent");
-
-                    b.Property<string>("Content")
-                        .IsRequired();
-
-                    b.ToTable("CustomContentText");
-
-                    b.HasDiscriminator().HasValue("CustomContentText");
                 });
 
             modelBuilder.Entity("EducationManagementStudio.Models.ClassModels.Class", b =>
