@@ -8,9 +8,10 @@ using EducationManagementStudio.Data;
 namespace EducationManagementStudio.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161011132544_Removed-StartPageFromCourse")]
+    partial class RemovedStartPageFromCourse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -98,41 +99,6 @@ namespace EducationManagementStudio.Data.Migrations
                     b.ToTable("StudentGroup");
                 });
 
-            modelBuilder.Entity("EducationManagementStudio.Models.ClassModels.Class", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("CourseId");
-
-                    b.Property<int?>("ExerciseId");
-
-                    b.Property<int?>("NextClassesId");
-
-                    b.Property<int>("Order");
-
-                    b.Property<int?>("ReportId");
-
-                    b.Property<int?>("TestId");
-
-                    b.Property<string>("Topic")
-                        .HasAnnotation("MaxLength", 1000);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("ExerciseId");
-
-                    b.HasIndex("NextClassesId");
-
-                    b.HasIndex("ReportId");
-
-                    b.HasIndex("TestId");
-
-                    b.ToTable("Class");
-                });
-
             modelBuilder.Entity("EducationManagementStudio.Models.CourseModels.Course", b =>
                 {
                     b.Property<int>("Id")
@@ -152,26 +118,6 @@ namespace EducationManagementStudio.Data.Migrations
                     b.HasIndex("CreatorId");
 
                     b.ToTable("Courses");
-                });
-
-            modelBuilder.Entity("EducationManagementStudio.Models.CourseModels.CourseToGroup", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("CourseId")
-                        .IsRequired();
-
-                    b.Property<int?>("GroupId")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("GroupId");
-
-                    b.ToTable("CourseToGroup");
                 });
 
             modelBuilder.Entity("EducationManagementStudio.Models.CourseModels.CourseToStudent", b =>
@@ -231,7 +177,8 @@ namespace EducationManagementStudio.Data.Migrations
                     b.Property<int?>("CustomPageContentId")
                         .IsRequired();
 
-                    b.Property<int>("CustomPageId");
+                    b.Property<int?>("CustomPageId")
+                        .IsRequired();
 
                     b.Property<int>("Order");
 
@@ -355,14 +302,11 @@ namespace EducationManagementStudio.Data.Migrations
                 {
                     b.HasBaseType("EducationManagementStudio.Models.AccountModels.ApplicationUser");
 
-                    b.Property<int?>("GroupId")
-                        .IsRequired();
+                    b.Property<int>("GroupId");
 
                     b.Property<string>("IndexNumber")
                         .IsRequired()
                         .HasAnnotation("MaxLength", 20);
-
-                    b.Property<bool>("IsYearRepresentative");
 
                     b.HasIndex("GroupId");
 
@@ -409,46 +353,12 @@ namespace EducationManagementStudio.Data.Migrations
                     b.HasDiscriminator().HasValue("CustomPagePanelContent");
                 });
 
-            modelBuilder.Entity("EducationManagementStudio.Models.ClassModels.Class", b =>
-                {
-                    b.HasOne("EducationManagementStudio.Models.CourseModels.Course", "Course")
-                        .WithMany("Classes")
-                        .HasForeignKey("CourseId");
-
-                    b.HasOne("EducationManagementStudio.Models.CustomPageModels.CustomPage", "Exercise")
-                        .WithMany()
-                        .HasForeignKey("ExerciseId");
-
-                    b.HasOne("EducationManagementStudio.Models.CustomPageModels.CustomPage", "NextClasses")
-                        .WithMany()
-                        .HasForeignKey("NextClassesId");
-
-                    b.HasOne("EducationManagementStudio.Models.CustomPageModels.CustomPage", "Report")
-                        .WithMany()
-                        .HasForeignKey("ReportId");
-
-                    b.HasOne("EducationManagementStudio.Models.CustomPageModels.CustomPage", "Test")
-                        .WithMany()
-                        .HasForeignKey("TestId");
-                });
-
             modelBuilder.Entity("EducationManagementStudio.Models.CourseModels.Course", b =>
                 {
                     b.HasOne("EducationManagementStudio.Models.AccountModels.Teacher", "Creator")
                         .WithMany("CreatedCourses")
                         .HasForeignKey("CreatorId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("EducationManagementStudio.Models.CourseModels.CourseToGroup", b =>
-                {
-                    b.HasOne("EducationManagementStudio.Models.CourseModels.Course", "Course")
-                        .WithMany("CoursesToGroups")
-                        .HasForeignKey("CourseId");
-
-                    b.HasOne("EducationManagementStudio.Models.AccountModels.StudentGroup", "Group")
-                        .WithMany("CoursesToGroups")
-                        .HasForeignKey("GroupId");
                 });
 
             modelBuilder.Entity("EducationManagementStudio.Models.CourseModels.CourseToStudent", b =>

@@ -117,14 +117,19 @@ namespace EducationManagementStudio.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             if (ModelState.IsValid)
             {
                 var signInResult = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
                 if (signInResult.Succeeded)
                 {
-                    return RedirectToAction(nameof(HomeController.Index), "Home");
+                    bool hasReturnUrl = !String.IsNullOrWhiteSpace(returnUrl);
+
+                    if (!hasReturnUrl)
+                        return RedirectToAction(nameof(HomeController.Index), "Home");
+                    else
+                        return Redirect(returnUrl);
                 }
             }
 
@@ -150,8 +155,12 @@ namespace EducationManagementStudio.Controllers
             };
 
             var studentGroup = await _db.StudentGroup.SingleOrDefaultAsync(g => g.Name == model.GroupName);
-            if (studentGroup == default(StudentGroup))
+            bool isStudentGroupExist = studentGroup != default(StudentGroup);
+            if (isStudentGroupExist)
+                student.Group = studentGroup;
+            else
                 student.Group = new StudentGroup() { Name = model.GroupName };
+
             return student;
         }
     }

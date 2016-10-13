@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using EducationManagementStudio.Models.CustomPageContentModels.ViewModels;
 using EducationManagementStudio.Data;
 using EducationManagementStudio.Models.CustomPageContentModels;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -38,6 +39,25 @@ namespace EducationManagementStudio.Controllers
 
             _db.CustomPagePanelContent.Add(panelContent);
 
+            await _db.SaveChangesAsync();
+
+            return View();
+        }
+
+        public async Task<IActionResult> EditPanel(int id)
+        {
+            var panelContent = await _db.CustomPagePanelContent.SingleAsync(cppc => cppc.Id == id);
+
+            return View(panelContent);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditPanel(int id, CustomPagePanelContent panelContent)
+        {
+            if (!ModelState.IsValid)
+                return View(panelContent);
+
+            _db.Update(panelContent);
             await _db.SaveChangesAsync();
 
             return View();

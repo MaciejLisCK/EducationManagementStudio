@@ -1,6 +1,7 @@
 ﻿using EducationManagementStudio.Models.CourseModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -13,7 +14,10 @@ namespace EducationManagementStudio.Models.AccountModels
         [Required, StringLength(20)]
         public string IndexNumber { get; set; }
         [Required]
+        public bool IsYearRepresentative { get; set; }
+        [Required]
         public StudentGroup Group { get; set; }
+
         public virtual ICollection<CourseToStudent> CoursesToStudents { get; set; }
 
         [NotMapped]

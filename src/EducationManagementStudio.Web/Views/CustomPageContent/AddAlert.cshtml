@@ -1,5 +1,7 @@
 ﻿@model EducationManagementStudio.Models.CustomPageContentModels.ViewModels.CustomPageAlertContentViewModel
 
+@using EducationManagementStudio.Models.CustomPageContentModels
+
 <h1>Add Alert Content</h1>
 <p class="lead">Create a new Alert Content</p>
 <hr />
@@ -9,15 +11,15 @@
     <div class="form-group">
         <label asp-for="Content" class="col-md-2 control-label"></label>
         <div class="col-md-10">
-            <input asp-for="Content" class="form-control" />
+            <textarea asp-for="Content" class="form-control" rows="15"></textarea>
             <span asp-validation-for="Content" class="text-danger"></span>
         </div>
     </div>
     <div class="form-group">
         <label asp-for="AlertType" class="col-md-2 control-label"></label>
         <div class="col-md-10">
-            <input asp-for="AlertType" class="form-control" />
-            <span asp-validation-for="AlertType" class="text-danger"></span>
+            <select class="form-control" asp-for="AlertType" asp-items="Html.GetEnumSelectList<CustomPageAlertContentType>()">
+            </select> 
         </div>
     </div>
     <div class="form-group">

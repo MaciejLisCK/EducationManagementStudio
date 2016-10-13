@@ -1,0 +1,43 @@
+﻿@model EducationManagementStudio.Models.CourseModels.Course
+
+<h1>@Model.Name</h1>
+<p class="lead">@Model.Description</p>
+<hr />
+
+<div class="alert alert-dismissible alert-warning">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div data-markdown="content-trim">
+#### Informacje wstępne
+
+1. Zakaz **komunikowania** się z innymi osobami.
+2. Zakaz korzystania z **telefonów komórkowych**.
+3. Zakaz korzystania ze stron internetowych innych niż dokumentacja, Wikipedia.
+4. Na blacie przed sobą można mieć wyłącznie: *zeszyt*, *przybory do pisania*, *__własnoręcznie__ napisane materiały*, *literaturę związaną z zajęciami*, *wydrukowaną dokumentację*.
+5. Spożywanie napojów i posiłków poza laboratorium, na przerwie.
+6. Niezastosowanie się do powyższych będzie skutkowało oceną 2 z zajęć.
+    </div>
+</div>
+
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th class="col-md-8">Temat</th>
+            <th>Wejściówka</th>
+            <th>Laboratorium</th>
+            <th>Sprawozdanie</th>
+            <th>Następne zajęcia</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var currentClass in Model.Classes)
+        {
+            <tr>
+                <td>@currentClass.Topic</td>
+                <td>@currentClass.Test?.Title</td>
+                <td>@currentClass.Exercise?.Title</td>
+                <td>@currentClass.Report?.Title</td>
+                <td>@currentClass.NextClasses?.Title</td>
+            </tr>
+        }
+    </tbody>
+</table>

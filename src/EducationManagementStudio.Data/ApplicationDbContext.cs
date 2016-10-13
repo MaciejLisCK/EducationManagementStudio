@@ -20,6 +20,7 @@ namespace EducationManagementStudio.Data
 
         public DbSet<Course> Courses { get; set; }
         public DbSet<CourseToStudent> CourseToStudent { get; set; }
+        public DbSet<CourseToGroup> CourseToGroup { get; set; }
         public DbSet<CustomPage> CustomPage { get; set; }
         public DbSet<CustomPageToCustomPageContent> CustomPageToCustomPageContent { get; set; }
         public DbSet<CustomPageContent> CustomPageContent { get; set; }
@@ -37,8 +38,11 @@ namespace EducationManagementStudio.Data
             modelBuilder.Entity<StudentGroup>()
                 .HasIndex(b => b.Name)
                 .IsUnique();
-            
-            foreach(var courseToStudentForeignKey in modelBuilder.Entity<CourseToStudent>().Metadata.GetForeignKeys())
+
+            foreach (var courseToStudentForeignKey in modelBuilder.Entity<CourseToStudent>().Metadata.GetForeignKeys())
+                courseToStudentForeignKey.DeleteBehavior = DeleteBehavior.Restrict;
+
+            foreach (var courseToStudentForeignKey in modelBuilder.Entity<CourseToGroup>().Metadata.GetForeignKeys())
                 courseToStudentForeignKey.DeleteBehavior = DeleteBehavior.Restrict;
         }
     }

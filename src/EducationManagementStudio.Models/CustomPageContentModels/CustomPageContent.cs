@@ -11,14 +11,5 @@ namespace EducationManagementStudio.Models.CustomPageContentModels
     {
         public int Id { get; set; }
         public virtual ICollection<CustomPageToCustomPageContent> CustomPagesToCustomPageContents { get; set; }
-
-        [NotMapped]
-        public IEnumerable<CustomPage> ParentPages
-        {
-            get
-            {
-                return CustomPagesToCustomPageContents.Select(cptcpc => cptcpc.CustomPage);
-            }
-        }
     }
 }

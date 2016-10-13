@@ -11,55 +11,62 @@
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
         <label asp-for="FirstName" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
+        <div class="col-md-6">
             <input asp-for="FirstName" class="form-control" />
             <span asp-validation-for="FirstName" class="text-danger"></span>
         </div>
     </div>
     <div class="form-group">
         <label asp-for="LastName" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
+        <div class="col-md-6">
             <input asp-for="LastName" class="form-control" />
             <span asp-validation-for="LastName" class="text-danger"></span>
         </div>
     </div>
     <div class="form-group">
         <label asp-for="Email" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
+        <div class="col-md-6">
             <input asp-for="Email" class="form-control" />
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
     </div>
     <div class="form-group">
         <label asp-for="IndexNumber" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
+        <div class="col-md-2">
             <input asp-for="IndexNumber" class="form-control" />
             <span asp-validation-for="IndexNumber" class="text-danger"></span>
         </div>
     </div>
     <div class="form-group">
         <label asp-for="GroupName" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
+        <div class="col-md-2">
             <input asp-for="GroupName" class="form-control" />
             <span asp-validation-for="GroupName" class="text-danger"></span>
         </div>
     </div>
     <div class="form-group">
+        <label asp-for="IsYearRepresentative" class="col-md-2 control-label"></label>
+        <div class="col-md-1">
+            <input asp-for="IsYearRepresentative" class="form-control" />
+            <span asp-validation-for="IsYearRepresentative" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
         <label asp-for="Password" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
+        <div class="col-md-6">
             <input asp-for="Password" class="form-control" />
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
     </div>
     <div class="form-group">
         <label asp-for="ConfirmPassword" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
+        <div class="col-md-6">
             <input asp-for="ConfirmPassword" class="form-control" />
             <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
         </div>
     </div>
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
+        <div class="col-md-offset-2 col-md-6">
             <button type="submit" class="btn btn-primary">Register</button>
         </div>
     </div>

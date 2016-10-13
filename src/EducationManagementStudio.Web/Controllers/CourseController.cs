@@ -37,6 +37,18 @@ namespace EducationManagementStudio.Controllers
             return View(courses);
         }
 
+        public IActionResult View(int id)
+        {
+            var course = _db.Courses
+                .Include(c => c.Classes).ThenInclude(c => c.Test)
+                .Include(c => c.Classes).ThenInclude(c => c.Exercise)
+                .Include(c => c.Classes).ThenInclude(c => c.Report)
+                .Include(c => c.Classes).ThenInclude(c => c.NextClasses)
+                .SingleOrDefault(c => c.Id == id);
+
+            return View(course);
+        }
+
         public IActionResult Add()
         {
             return View();
