@@ -7,7 +7,7 @@
 <div class="list-group">
     @foreach (var course in Model)
     {
-        <a href="Course/View/@course.Id" class="list-group-item">
+        <a asp-controller="Course" asp-action="View" asp-route-id="@course.Id" class="list-group-item">
             @course.Name
         </a>
     }

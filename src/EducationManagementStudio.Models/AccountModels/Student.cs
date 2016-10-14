@@ -1,4 +1,5 @@
 ﻿using EducationManagementStudio.Models.CourseModels;
+using EducationManagementStudio.Models.CustomContentResponseModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,7 +20,8 @@ namespace EducationManagementStudio.Models.AccountModels
         public StudentGroup Group { get; set; }
 
         public virtual ICollection<CourseToStudent> CoursesToStudents { get; set; }
-
+        public virtual ICollection<CustomContentResponse> CustomContentResponses { get; set; }
+        
         [NotMapped]
         public IEnumerable<Course> EnrolledCourses
         {

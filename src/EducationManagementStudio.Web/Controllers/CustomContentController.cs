@@ -93,5 +93,23 @@ namespace EducationManagementStudio.Controllers
             return View();
         }
 
+        public IActionResult AddTextArea()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddTextArea(CustomContentTextArea textAreaContent)
+        {
+            if (!ModelState.IsValid)
+                return View(textAreaContent);
+
+            _db.CustomPageTextAreaContent.Add(textAreaContent);
+
+            await _db.SaveChangesAsync();
+
+            return View();
+        }
+
     }
 }

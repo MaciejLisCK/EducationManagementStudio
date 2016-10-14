@@ -1,0 +1,17 @@
+﻿@model EducationManagementStudio.Models.CustomContentModels.CustomContentTextArea
+
+<form asp-controller="CustomContent" asp-action="AddTextArea" method="post" class="form-horizontal">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="RowsCount" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="RowsCount" class="form-control" type="number" min="1" step="1" />
+            <span asp-validation-for="RowsCount" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+    </div>
+</form>

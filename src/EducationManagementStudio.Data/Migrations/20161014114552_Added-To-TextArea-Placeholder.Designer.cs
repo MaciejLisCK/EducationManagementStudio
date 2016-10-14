@@ -8,9 +8,10 @@ using EducationManagementStudio.Data;
 namespace EducationManagementStudio.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161014114552_Added-To-TextArea-Placeholder")]
+    partial class AddedToTextAreaPlaceholder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -213,30 +214,6 @@ namespace EducationManagementStudio.Data.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("CustomContent");
                 });
 
-            modelBuilder.Entity("EducationManagementStudio.Models.CustomContentResponseModel.CustomContentResponse", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("AddedDate");
-
-                    b.Property<int?>("CustomContentId")
-                        .IsRequired();
-
-                    b.Property<string>("StudentId")
-                        .IsRequired();
-
-                    b.Property<string>("Value");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomContentId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("CustomContentResponse");
-                });
-
             modelBuilder.Entity("EducationManagementStudio.Models.CustomPageModels.CustomPage", b =>
                 {
                     b.Property<int>("Id")
@@ -383,7 +360,8 @@ namespace EducationManagementStudio.Data.Migrations
                 {
                     b.HasBaseType("EducationManagementStudio.Models.AccountModels.ApplicationUser");
 
-                    b.Property<int>("GroupId");
+                    b.Property<int?>("GroupId")
+                        .IsRequired();
 
                     b.Property<string>("IndexNumber")
                         .IsRequired()
@@ -521,19 +499,6 @@ namespace EducationManagementStudio.Data.Migrations
                     b.HasOne("EducationManagementStudio.Models.CourseModels.Course", "CourseCustomDescription")
                         .WithMany("CustomContentDescription")
                         .HasForeignKey("CourseCustomDescriptionId");
-                });
-
-            modelBuilder.Entity("EducationManagementStudio.Models.CustomContentResponseModel.CustomContentResponse", b =>
-                {
-                    b.HasOne("EducationManagementStudio.Models.CustomContentModels.CustomContent", "CustomContent")
-                        .WithMany("CustomContentResponses")
-                        .HasForeignKey("CustomContentId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("EducationManagementStudio.Models.AccountModels.Student", "Student")
-                        .WithMany("CustomContentResponses")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("EducationManagementStudio.Models.CustomPageModels.CustomPageToCustomContent", b =>

@@ -9,6 +9,7 @@ using EducationManagementStudio.Models.CourseModels;
 using EducationManagementStudio.Models.CustomPageModels;
 using Microsoft.EntityFrameworkCore.Metadata;
 using EducationManagementStudio.Models.CustomContentModels;
+using EducationManagementStudio.Models.CustomContentResponseModel;
 
 namespace EducationManagementStudio.Data
 {
@@ -21,12 +22,16 @@ namespace EducationManagementStudio.Data
         public DbSet<Course> Courses { get; set; }
         public DbSet<CourseToStudent> CourseToStudent { get; set; }
         public DbSet<CourseToGroup> CourseToGroup { get; set; }
+
         public DbSet<CustomPage> CustomPage { get; set; }
         public DbSet<CustomPageToCustomContent> CustomPageToCustomContent { get; set; }
+
         public DbSet<CustomContent> CustomContent { get; set; }
         public DbSet<CustomContentText> CustomPageTextContent { get; set; }
         public DbSet<CustomContentPanel> CustomPagePanelContent { get; set; }
         public DbSet<CustomContentAlert> CustomPageAlertContent { get; set; }
+        public DbSet<CustomContentTextArea> CustomPageTextAreaContent { get; set; }
+        public DbSet<CustomContentResponse> CustomContentResponse { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

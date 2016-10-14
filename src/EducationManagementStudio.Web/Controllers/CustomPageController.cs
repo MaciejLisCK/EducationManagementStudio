@@ -24,7 +24,9 @@ namespace EducationManagementStudio.Controllers
         {
             var customPage = await _db.CustomPage
                 .Include(cp => cp.CustomPagesToCustomContents)
-                .ThenInclude(cptcpc => cptcpc.CustomContent) 
+                .ThenInclude(cptcpc => cptcpc.CustomContent)
+                .ThenInclude(cc => cc.CustomContentResponses)
+                .ThenInclude(ccr => ccr.Student)
                 .SingleAsync(cp => cp.Id == id);
 
             return View(customPage);

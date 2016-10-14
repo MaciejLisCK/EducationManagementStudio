@@ -19,20 +19,47 @@ namespace EducationManagementStudio.Controllers
     {
         private readonly ApplicationDbContext _db;
         private readonly UserManager<Teacher> _teacherUserManager;
+        private readonly UserManager<Student> _studentManager;
 
         public CourseController(
             ApplicationDbContext db,
-            UserManager<Teacher> teacherUserManager)
+            UserManager<Teacher> teacherUserManager,
+            UserManager<Student> studentManager)
         {
             _teacherUserManager = teacherUserManager;
+            _studentManager = studentManager;
             _db = db;
         }
 
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> ListForStudent()
         {
-            var courses = await _db.Courses
-                .Include(c => c.Creator)
-                .ToListAsync();
+            var currentStudent = await _studentManager.GetUserAsync(HttpContext.User);
+
+            var appliedCoursesByUser = _db.Student
+                .Include(s => s.CoursesToStudents)
+                .ThenInclude(cts => cts.Course)
+                .Single(s => s.Id == currentStudent.Id)
+                .CoursesToStudents
+                .Select(cts => cts.Course)
+                .ToList();
+
+            var appliedCoursesByGroup = _db.Student
+                .Include(s => s.Group)
+                .ThenInclude(g => g.CoursesToGroups)
+                .ThenInclude(ctg => ctg.Course)
+                .Single(s => s.Id == currentStudent.Id)
+                .Group
+                .CoursesToGroups
+                .Select(ctg => ctg.Course)
+                .ToList();
+
+            var appliedCourses = appliedCoursesByUser.Union(appliedCoursesByGroup).ToList();
+
+            return View(appliedCourses);
+        }
+        public async Task<IActionResult> ListForTeacher()
+        {
+            var courses = await _db.Courses.ToListAsync();
 
             return View(courses);
         }

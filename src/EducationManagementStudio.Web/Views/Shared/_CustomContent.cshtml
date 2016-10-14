@@ -1,6 +1,13 @@
 ﻿@model List<EducationManagementStudio.Models.CustomContentModels.CustomContent>
 
 @using EducationManagementStudio.Models.CustomContentModels
+@using EducationManagementStudio.Models.AccountModels
+
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    var currentUser = await UserManager.GetUserAsync(User);
+}
 
 @foreach (var content in Model)
 {
@@ -9,7 +16,7 @@
         var textContent = (CustomContentText)content;
 
         <div data-markdown="content-trim">
-            @textContent.Content
+            @Html.Raw(textContent.Content)
         </div>
     }
 
@@ -38,5 +45,34 @@
         </div>
     }
 
+    if (content is CustomContentTextArea)
+    {
+        var textAreaContent = (CustomContentTextArea)content;
 
+        <textarea class="form-control" rows="@textAreaContent.RowsCount" placeholder="@textAreaContent.Placeholder" data-inputcomponentid="@textAreaContent.Id">@textAreaContent.CustomContentResponses.SingleOrDefault(ccr => ccr.Student.Id == currentUser.Id)?.Value</textarea>
+    }
 }
+
+<script>
+    var inputComponents = document.querySelectorAll('[data-inputcomponentid]');
+    for(var i = 0; i<inputComponents.length; i++)
+    {
+        var currentComponent = inputComponents[i];
+
+        currentComponent.oninput = function (event) {
+            var currentComponentId = event.srcElement.attributes['data-inputcomponentid'].value;
+            var currentComponentValue = event.srcElement.value;
+
+            var data = { 
+                ComponentId: currentComponentId,
+                Value: currentComponentValue,
+                DateSent: new Date()
+            }
+
+            var XHR = new XMLHttpRequest();
+            XHR.open('POST', '/api/CustomContentResponse');
+            XHR.setRequestHeader('Content-Type', 'application/json');
+            XHR.send(JSON.stringify(data));
+        }
+    }
+</script>

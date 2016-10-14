@@ -1,0 +1,56 @@
+﻿@model List<EducationManagementStudio.Models.CourseModels.Course>
+
+<h1>Start Page</h1>
+<p class="lead">Welcome to EMS</p>
+<hr />
+
+<div class="row">
+    <div class="col-xs-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Kontakt</h3>
+            </div>
+            <div class="panel-body">
+                <address>
+                    <strong>Maciej Lis</strong><br>
+                    <a href="mailto:studia@maciejlis.com">studia@maciejlis.com</a><br>
+                    <a href="mailto:studia@maciejlis.com">maciej.lis@wat.edu.pl</a><br>
+                    <abbr title="Pokój">P:</abbr> 124/65
+                </address>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Konsultacje</h3>
+            </div>
+            <div class="panel-body">
+                Konsultacje odbywają się w każdą <strong>środę</strong> w godzinach <strong>15:00-15:45</strong> w pokoju <strong>124/65</strong>.<br />
+                <small class="text-muted">Proszę o wysłanie wiadomości mailowej przed przyjściem na konsultacje.</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Courses</h3>
+    </div>
+    <div class="panel-body">
+        <div class="list-group">
+            @foreach (var course in Model)
+            {
+                <a asp-controller="Course" asp-action="View" asp-route-id="@course.Id" class="list-group-item">
+                    @course.Name
+                </a>
+            }
+        </div>
+    </div>
+</div>
+
+
+
