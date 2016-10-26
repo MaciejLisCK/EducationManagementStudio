@@ -8,9 +8,10 @@ using EducationManagementStudio.Data;
 namespace EducationManagementStudio.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161019122843_Added-NewFileResponse")]
+    partial class AddedNewFileResponse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -221,10 +222,11 @@ namespace EducationManagementStudio.Data.Migrations
                     b.Property<int?>("CustomContentId")
                         .IsRequired();
 
-                    b.Property<string>("StudentId")
+                    b.Property<string>("Discriminator")
                         .IsRequired();
 
-                    b.Property<string>("TextAreaResponse");
+                    b.Property<string>("StudentId")
+                        .IsRequired();
 
                     b.Property<DateTime>("UpdatedDate");
 
@@ -234,7 +236,9 @@ namespace EducationManagementStudio.Data.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("CustomContentResponses");
+                    b.ToTable("CustomContentResponse");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("CustomContentResponse");
                 });
 
             modelBuilder.Entity("EducationManagementStudio.Models.CustomPageModels.CustomPage", b =>
@@ -422,19 +426,6 @@ namespace EducationManagementStudio.Data.Migrations
                     b.HasDiscriminator().HasValue("CustomContentAlert");
                 });
 
-            modelBuilder.Entity("EducationManagementStudio.Models.CustomContentModels.CustomContentFile", b =>
-                {
-                    b.HasBaseType("EducationManagementStudio.Models.CustomContentModels.CustomContent");
-
-                    b.Property<string>("Accept");
-
-                    b.Property<string>("Description");
-
-                    b.ToTable("CustomContentFile");
-
-                    b.HasDiscriminator().HasValue("CustomContentFile");
-                });
-
             modelBuilder.Entity("EducationManagementStudio.Models.CustomContentModels.CustomContentPanel", b =>
                 {
                     b.HasBaseType("EducationManagementStudio.Models.CustomContentModels.CustomContent");
@@ -474,6 +465,29 @@ namespace EducationManagementStudio.Data.Migrations
                     b.ToTable("CustomContentTextArea");
 
                     b.HasDiscriminator().HasValue("CustomContentTextArea");
+                });
+
+            modelBuilder.Entity("EducationManagementStudio.Models.CustomContentResponseModel.CustomContentFileResponse", b =>
+                {
+                    b.HasBaseType("EducationManagementStudio.Models.CustomContentResponseModel.CustomContentResponse");
+
+                    b.Property<string>("FileName")
+                        .IsRequired();
+
+                    b.ToTable("CustomContentFileResponse");
+
+                    b.HasDiscriminator().HasValue("CustomContentFileResponse");
+                });
+
+            modelBuilder.Entity("EducationManagementStudio.Models.CustomContentResponseModel.CustomContentTextResponse", b =>
+                {
+                    b.HasBaseType("EducationManagementStudio.Models.CustomContentResponseModel.CustomContentResponse");
+
+                    b.Property<string>("Value");
+
+                    b.ToTable("CustomContentTextResponse");
+
+                    b.HasDiscriminator().HasValue("CustomContentTextResponse");
                 });
 
             modelBuilder.Entity("EducationManagementStudio.Models.ClassModels.Class", b =>

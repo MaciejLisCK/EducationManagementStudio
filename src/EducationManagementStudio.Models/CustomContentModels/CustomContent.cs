@@ -13,7 +13,8 @@ namespace EducationManagementStudio.Models.CustomContentModels
     {
         public int Id { get; set; }
         public virtual ICollection<CustomPageToCustomContent> CustomPagesToCustomContents { get; set; }
-        public virtual ICollection<CustomContentResponse> CustomContentResponses { get; set; }
         public Course CourseCustomDescription { get; set; }
+
+        public virtual ICollection<CustomContentResponse> CustomContentResponses { get; set; }
     }
 }

@@ -15,8 +15,10 @@ namespace EducationManagementStudio.Models.CustomContentResponseModel
         public CustomContent CustomContent { get; set; }
         [Required]
         public Student Student { get; set; }
-        public string Value { get; set; }
         [Required]
-        public DateTime AddedDate { get; set; }
+        public DateTime UpdatedDate { get; set; }
+
+        public string TextAreaResponse { get; set; }
+
     }
 }

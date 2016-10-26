@@ -31,7 +31,10 @@ namespace EducationManagementStudio.Data
         public DbSet<CustomContentPanel> CustomPagePanelContent { get; set; }
         public DbSet<CustomContentAlert> CustomPageAlertContent { get; set; }
         public DbSet<CustomContentTextArea> CustomPageTextAreaContent { get; set; }
-        public DbSet<CustomContentResponse> CustomContentResponse { get; set; }
+        public DbSet<CustomContentFile> CustomContentFileContent { get; set; }
+        public DbSet<CustomContentResponse> CustomContentResponses { get; set; }
+        
+
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -50,6 +53,7 @@ namespace EducationManagementStudio.Data
 
             foreach (var courseToStudentForeignKey in modelBuilder.Entity<CourseToGroup>().Metadata.GetForeignKeys())
                 courseToStudentForeignKey.DeleteBehavior = DeleteBehavior.Restrict;
+
         }
     }
 }

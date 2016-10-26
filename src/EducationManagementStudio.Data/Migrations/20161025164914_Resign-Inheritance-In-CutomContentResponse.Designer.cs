@@ -8,9 +8,10 @@ using EducationManagementStudio.Data;
 namespace EducationManagementStudio.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161025164914_Resign-Inheritance-In-CutomContentResponse")]
+    partial class ResignInheritanceInCutomContentResponse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -420,19 +421,6 @@ namespace EducationManagementStudio.Data.Migrations
                     b.ToTable("CustomContentAlert");
 
                     b.HasDiscriminator().HasValue("CustomContentAlert");
-                });
-
-            modelBuilder.Entity("EducationManagementStudio.Models.CustomContentModels.CustomContentFile", b =>
-                {
-                    b.HasBaseType("EducationManagementStudio.Models.CustomContentModels.CustomContent");
-
-                    b.Property<string>("Accept");
-
-                    b.Property<string>("Description");
-
-                    b.ToTable("CustomContentFile");
-
-                    b.HasDiscriminator().HasValue("CustomContentFile");
                 });
 
             modelBuilder.Entity("EducationManagementStudio.Models.CustomContentModels.CustomContentPanel", b =>

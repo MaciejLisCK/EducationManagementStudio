@@ -8,9 +8,10 @@ using EducationManagementStudio.Data;
 namespace EducationManagementStudio.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161026113858_Added-CustomContentFile")]
+    partial class AddedCustomContentFile
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -425,8 +426,6 @@ namespace EducationManagementStudio.Data.Migrations
             modelBuilder.Entity("EducationManagementStudio.Models.CustomContentModels.CustomContentFile", b =>
                 {
                     b.HasBaseType("EducationManagementStudio.Models.CustomContentModels.CustomContent");
-
-                    b.Property<string>("Accept");
 
                     b.Property<string>("Description");
 

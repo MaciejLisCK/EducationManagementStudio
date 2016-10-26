@@ -49,18 +49,27 @@
     {
         var textAreaContent = (CustomContentTextArea)content;
 
-        <textarea class="form-control" rows="@textAreaContent.RowsCount" placeholder="@textAreaContent.Placeholder" data-inputcomponentid="@textAreaContent.Id">@textAreaContent.CustomContentResponses.SingleOrDefault(ccr => ccr.Student.Id == currentUser.Id)?.Value</textarea>
+        <textarea class="form-control" rows="@textAreaContent.RowsCount" placeholder="@textAreaContent.Placeholder" data-textAreaContentElementId="@textAreaContent.Id">@textAreaContent.CustomContentResponses?.SingleOrDefault(ccr => ccr.Student.Id == currentUser.Id)?.TextAreaResponse</textarea>
     }
+
+    if (content is CustomContentFile)
+    {
+        var fileContent = (CustomContentFile)content;
+
+        <input class="form-control" type="file" data-fileContentElementId="@fileContent.Id" />
+    }
+
 }
 
 <script>
-    var inputComponents = document.querySelectorAll('[data-inputcomponentid]');
-    for(var i = 0; i<inputComponents.length; i++)
-    {
-        var currentComponent = inputComponents[i];
+    // text area upload
+
+    var textAreaContentElements = document.querySelectorAll('[data-textAreaContentElementId]');
+    for (var i = 0; i < textAreaContentElements.length; i++) {
+        var currentComponent = textAreaContentElements[i];
 
         currentComponent.oninput = function (event) {
-            var currentComponentId = event.srcElement.attributes['data-inputcomponentid'].value;
+            var currentComponentId = event.srcElement.attributes['data-textAreaContentElementId'].value;
             var currentComponentValue = event.srcElement.value;
 
             var data = { 
@@ -73,6 +82,26 @@
             XHR.open('POST', '/api/CustomContentResponse');
             XHR.setRequestHeader('Content-Type', 'application/json');
             XHR.send(JSON.stringify(data));
+        }
+    }
+</script>
+
+<script>
+    //fileUpload
+
+    var fileContentElements = document.querySelectorAll('[data-fileContentElementId]');
+    for (var i = 0; i < fileContentElements.length; i++) {
+        var currentComponent = fileContentElements[i];
+
+        currentComponent.onchange = function (event) {
+            var currentComponentId = event.srcElement.attributes['data-fileContentElementId'].value;
+
+            var formData = new FormData();
+            formData.append('files', event.srcElement.files[0]);
+
+            var request = new XMLHttpRequest();
+            request.open("POST", "/api/CustomContentResponse/File/" + currentComponentId);
+            request.send(formData);
         }
     }
 </script>

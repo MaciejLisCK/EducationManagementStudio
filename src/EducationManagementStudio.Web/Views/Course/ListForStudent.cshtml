@@ -1,8 +1,10 @@
 ﻿@model List<EducationManagementStudio.Models.CourseModels.Course>
 
-<h1>Start Page</h1>
-<p class="lead">Welcome to EMS</p>
+<h1>Course</h1>
+<p class="lead">List of courses</p>
 <hr />
+
+<input type="file" id="file1" multiple />
 
 <div class="row">
     <div class="col-xs-6">
@@ -14,7 +16,7 @@
                 <address>
                     <strong>Maciej Lis</strong><br>
                     <a href="mailto:studia@maciejlis.com">studia@maciejlis.com</a><br>
-                    <a href="mailto:studia@maciejlis.com">maciej.lis@wat.edu.pl</a><br>
+                    <a href="mailto:maciej.lis@wat.edu.pl">maciej.lis@wat.edu.pl</a><br>
                     <abbr title="Pokój">P:</abbr> 124/65
                 </address>
             </div>
@@ -33,9 +35,6 @@
     </div>
 </div>
 
-
-
-
 <div class="panel panel-primary">
     <div class="panel-heading">
         <h3 class="panel-title">Courses</h3>
@@ -52,5 +51,16 @@
     </div>
 </div>
 
+<script>
+    function sendFiles() {
+        var element = document.getElementById('file1');
 
+        var formData = new FormData();
+        for (var i = 0; i < element.files.length; i++)
+            formData.append('files', element.files[i]);
 
+        var request = new XMLHttpRequest();
+        request.open("POST", "http://localhost:6705/api/CustomContentResponse/File");
+        request.send(formData);
+    }
+</script>

@@ -7,6 +7,7 @@ using EducationManagementStudio.Data;
 using Microsoft.EntityFrameworkCore;
 using EducationManagementStudio.Models.CustomPageModels.ViewModels;
 using EducationManagementStudio.Models.CustomPageModels;
+using EducationManagementStudio.Models.CustomContentModels;
 
 namespace EducationManagementStudio.Controllers
 {
@@ -22,6 +23,7 @@ namespace EducationManagementStudio.Controllers
 
         public async Task<IActionResult> View(int id)
         {
+
             var customPage = await _db.CustomPage
                 .Include(cp => cp.CustomPagesToCustomContents)
                 .ThenInclude(cptcpc => cptcpc.CustomContent)

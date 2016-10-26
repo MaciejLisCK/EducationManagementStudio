@@ -14,6 +14,7 @@ namespace EducationManagementStudio.Models.CustomPageModels
         public CustomPage CustomPage { get; set; }
         [Required]
         public CustomContent CustomContent { get; set; }
+
         public int Order { get; set; }
     }
 }
