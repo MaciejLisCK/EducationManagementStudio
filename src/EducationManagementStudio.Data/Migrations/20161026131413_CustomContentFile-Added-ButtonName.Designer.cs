@@ -8,9 +8,10 @@ using EducationManagementStudio.Data;
 namespace EducationManagementStudio.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161026131413_CustomContentFile-Added-ButtonName")]
+    partial class CustomContentFileAddedButtonName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -431,9 +432,6 @@ namespace EducationManagementStudio.Data.Migrations
                     b.Property<string>("ButtonName")
                         .IsRequired();
 
-                    b.Property<string>("Label")
-                        .IsRequired();
-
                     b.ToTable("CustomContentFile");
 
                     b.HasDiscriminator().HasValue("CustomContentFile");
@@ -470,9 +468,6 @@ namespace EducationManagementStudio.Data.Migrations
             modelBuilder.Entity("EducationManagementStudio.Models.CustomContentModels.CustomContentTextArea", b =>
                 {
                     b.HasBaseType("EducationManagementStudio.Models.CustomContentModels.CustomContent");
-
-                    b.Property<string>("Label")
-                        .IsRequired();
 
                     b.Property<string>("Placeholder");
 

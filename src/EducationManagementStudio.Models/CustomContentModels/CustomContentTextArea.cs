@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EducationManagementStudio.Models.CustomContentModels
 {
-    public class CustomContentTextArea : CustomContent
+    public class CustomContentTextArea : InputCustomContent
     {
         [Required]
         public int RowsCount { get; set; }

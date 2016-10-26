@@ -12,6 +12,7 @@ using EducationManagementStudio.Models.CustomContentModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using EducationManagementStudio.Services;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,16 +24,19 @@ namespace EducationManagementStudio.Controllers
         private readonly ApplicationDbContext _db;
         private readonly UserManager<Student> _studentManager;
         private readonly IHostingEnvironment _environment;
+        private readonly ICustomContentFileService _customContentFileService;
 
         public CustomContentResponseController(
             ApplicationDbContext db,
             UserManager<Student> studentManager,
-            IHostingEnvironment environment
+            IHostingEnvironment environment,
+            ICustomContentFileService customContentFileService
             )
         {
             _db = db;
             _studentManager = studentManager;
             _environment = environment;
+            _customContentFileService = customContentFileService;
         }
 
         [HttpPost]
@@ -74,34 +78,23 @@ namespace EducationManagementStudio.Controllers
         {
             var student = await _studentManager.GetUserAsync(HttpContext.User);
 
-            var uploadsPath = Path.Combine(_environment.WebRootPath, "uploads/custom-content");
+            _customContentFileService
+                .CreateUserUploadFolderIfNotExist(student.Id);
 
-            var uploadStudentPath = Path.Combine(uploadsPath, student.Id);
-            if (!Directory.Exists(uploadStudentPath))
-                Directory.CreateDirectory(uploadStudentPath);
-
-            if(files.Count == 1)
+            if (files.Count == 1)
             {
-                RemoveFilesByNameWithoutExtenstion(customContentFileId.ToString(), uploadStudentPath);
+                _customContentFileService
+                    .RemoveUserFiles(student.Id, customContentFileId.ToString());
 
                 var file = files.First();
                 var fileName = customContentFileId + Path.GetExtension(file.FileName);
+                var studentUploadPath = _customContentFileService.GetUserUploadPath(student.Id);
 
-                using (var fileStream 
-                    = new FileStream(Path.Combine(uploadStudentPath, fileName), FileMode.Create))
+                using (var fileStream = new FileStream(Path.Combine(studentUploadPath, fileName), FileMode.Create))
                 {
                     await file.CopyToAsync(fileStream);
                 }
             }
-        }
-
-        private static void RemoveFilesByNameWithoutExtenstion(string name, string path)
-        {
-            var directory = new DirectoryInfo(path);
-            var existingFiles = directory.GetFiles()
-                .Where(f => Path.GetFileNameWithoutExtension(f.FullName) == name);
-            foreach (var existingFile in existingFiles)
-                System.IO.File.Delete(existingFile.FullName);
         }
 
         public class ApiRequestBase

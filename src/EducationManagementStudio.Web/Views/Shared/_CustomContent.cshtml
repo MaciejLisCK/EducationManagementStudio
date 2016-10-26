@@ -3,10 +3,11 @@
 @using EducationManagementStudio.Models.CustomContentModels
 @using EducationManagementStudio.Models.AccountModels
 
-@inject UserManager<ApplicationUser> UserManager
+@inject UserManager<ApplicationUser> userManager
+@inject ICustomContentFileService customContentFileService
 
 @{
-    var currentUser = await UserManager.GetUserAsync(User);
+    var currentUser = await userManager.GetUserAsync(User);
 }
 
 @foreach (var content in Model)
@@ -49,16 +50,34 @@
     {
         var textAreaContent = (CustomContentTextArea)content;
 
-        <textarea class="form-control" rows="@textAreaContent.RowsCount" placeholder="@textAreaContent.Placeholder" data-textAreaContentElementId="@textAreaContent.Id">@textAreaContent.CustomContentResponses?.SingleOrDefault(ccr => ccr.Student.Id == currentUser.Id)?.TextAreaResponse</textarea>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">@textAreaContent.Label</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" rows="@textAreaContent.RowsCount" placeholder="@textAreaContent.Placeholder" data-textAreaContentElementId="@textAreaContent.Id">@textAreaContent.CustomContentResponses?.SingleOrDefault(ccr => ccr.Student.Id == currentUser.Id)?.TextAreaResponse</textarea>
+                </div>
+            </div>
+        </form>
     }
 
     if (content is CustomContentFile)
     {
         var fileContent = (CustomContentFile)content;
-
-        <input class="form-control" type="file" data-fileContentElementId="@fileContent.Id" />
+        var hasFile = customContentFileService.HasFile(currentUser.Id, fileContent.Id);
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">@fileContent.Label</label>
+                <div class="col-sm-10">
+                    <label class="btn btn-default btn-file">
+                        @fileContent.ButtonName
+                        <span class="ok glyphicon glyphicon-ok" aria-hidden="true" style='display: @(hasFile?"inline":"none")'></span>
+                        <span class="error glyphicon glyphicon-remove" aria-hidden="true" style="display: @(!hasFile?"inline":"none")"></span>
+                        <input data-fileContentElementId="@fileContent.Id" type="file" style="display: none;" accept="@fileContent.Accept" />
+                    </label>
+                </div>
+            </div>
+        </form>
     }
-
 }
 
 <script>
@@ -78,10 +97,12 @@
                 DateSent: new Date()
             }
 
-            var XHR = new XMLHttpRequest();
-            XHR.open('POST', '/api/CustomContentResponse');
-            XHR.setRequestHeader('Content-Type', 'application/json');
-            XHR.send(JSON.stringify(data));
+            var request = new XMLHttpRequest();
+            request.open('POST', '/api/CustomContentResponse');
+            request.setRequestHeader('Content-Type', 'application/json');
+            request.send(JSON.stringify(data));
+            if (req.status == 200)
+                dump(req.responseText);
         }
     }
 </script>
@@ -102,6 +123,17 @@
             var request = new XMLHttpRequest();
             request.open("POST", "/api/CustomContentResponse/File/" + currentComponentId);
             request.send(formData);
+            request.onload = onLoad;
+            request.onerror = onError;
+
+            function onLoad() {
+                currentComponent.parentElement.querySelector('.ok').style.display = 'inline';
+                currentComponent.parentElement.querySelector('.error').style.display = 'none';
+            }
+            function onError() {
+                currentComponent.parentElement.querySelector('.ok').style.display = 'none';
+                currentComponent.parentElement.querySelector('.error').style.display = 'inline';
+            }
         }
     }
 </script>

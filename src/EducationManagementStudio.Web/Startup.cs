@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
+using EducationManagementStudio.Services;
 
 namespace EducationManagementStudio
 {
@@ -20,6 +21,7 @@ namespace EducationManagementStudio
             AddDbServices(services);
             AddIdentityServices(services);
             services.AddMvc();
+            services.AddTransient<ICustomContentFileService, CustomContentFileService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
