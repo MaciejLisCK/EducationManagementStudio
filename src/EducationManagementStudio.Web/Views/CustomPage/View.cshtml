@@ -8,3 +8,62 @@
 
 @await Html.PartialAsync("_CustomContent", Model.CustomPagesToCustomContents.OrderBy(cptcpc => cptcpc.Order).Select(cptcpc => cptcpc.CustomContent).ToList())
 
+@section scripts {
+    <script>
+    // text area upload
+
+    var textAreaContentElements = document.querySelectorAll('[data-textAreaContentElementId]');
+    for (var i = 0; i < textAreaContentElements.length; i++) {
+        var currentComponent = textAreaContentElements[i];
+
+        currentComponent.oninput = _.debounce(doRequest, 1000);
+
+        function doRequest(event) {
+            var currentComponentId = event.srcElement.attributes['data-textAreaContentElementId'].value;
+            var currentComponentValue = event.srcElement.value;
+
+            var data = {
+                ComponentId: currentComponentId,
+                Value: currentComponentValue,
+                DateSent: new Date()
+            }
+
+            var request = new XMLHttpRequest();
+            request.open('POST', '/api/CustomContentResponse');
+            request.setRequestHeader('Content-Type', 'application/json');
+            request.send(JSON.stringify(data));
+        }
+    }
+    </script>
+
+    <script>
+    //fileUpload
+
+    var fileContentElements = document.querySelectorAll('[data-fileContentElementId]');
+    for (var i = 0; i < fileContentElements.length; i++) {
+        var currentComponent = fileContentElements[i];
+
+        currentComponent.onchange = function (event) {
+            var currentComponentId = event.srcElement.attributes['data-fileContentElementId'].value;
+
+            var formData = new FormData();
+            formData.append('files', event.srcElement.files[0]);
+
+            var request = new XMLHttpRequest();
+            request.open("POST", "/api/CustomContentResponse/File/" + currentComponentId);
+            request.send(formData);
+            request.onload = onLoad;
+            request.onerror = onError;
+
+            function onLoad() {
+                currentComponent.parentElement.querySelector('.ok').style.display = 'inline';
+                currentComponent.parentElement.querySelector('.error').style.display = 'none';
+            }
+            function onError() {
+                currentComponent.parentElement.querySelector('.ok').style.display = 'none';
+                currentComponent.parentElement.querySelector('.error').style.display = 'inline';
+            }
+        }
+    }
+    </script>
+}

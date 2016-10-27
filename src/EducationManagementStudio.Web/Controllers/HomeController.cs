@@ -35,17 +35,38 @@ namespace EducationManagementStudio.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            var currentStudent = await _studentManager.GetUserAsync(HttpContext.User);
             var currentTeacher = await _teacherManager.GetUserAsync(HttpContext.User);
 
-            bool isStudentLogged = currentStudent != null;
             bool isTeacherLogged = currentTeacher != null;
-            if (isStudentLogged)
-                return RedirectToAction<CourseController>(nameof(CourseController.ListForStudent));
-            else if (isTeacherLogged)
+            if (isTeacherLogged)
                 return RedirectToAction<CourseController>(nameof(CourseController.ListForTeacher));
-            else
+            if (!User.Identity.IsAuthenticated)
                 return RedirectToAction<CourseController>(nameof(AccountController.Login));
+
+
+            var currentStudent = await _studentManager.GetUserAsync(HttpContext.User);
+
+            var appliedCoursesByUser = _db.Student
+                .Include(s => s.CoursesToStudents)
+                .ThenInclude(cts => cts.Course)
+                .Single(s => s.Id == currentStudent.Id)
+                .CoursesToStudents
+                .Select(cts => cts.Course)
+                .ToList();
+
+            var appliedCoursesByGroup = _db.Student
+                .Include(s => s.Group)
+                .ThenInclude(g => g.CoursesToGroups)
+                .ThenInclude(ctg => ctg.Course)
+                .Single(s => s.Id == currentStudent.Id)
+                .Group
+                .CoursesToGroups
+                .Select(ctg => ctg.Course)
+                .ToList();
+
+            var appliedCourses = appliedCoursesByUser.Union(appliedCoursesByGroup).ToList();
+
+            return View(appliedCourses);
         }
     }
 }

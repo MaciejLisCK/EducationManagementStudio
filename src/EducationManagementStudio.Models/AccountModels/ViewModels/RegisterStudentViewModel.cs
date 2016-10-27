@@ -10,16 +10,16 @@ namespace EducationManagementStudio.Models.AccountModels.ViewModels
     {
         [Required]
         [StringLength(20, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 5)]
-        [Display(Name = "Index Number")]
+        [Display(Name = "Numer albumu")]
         public string IndexNumber { get; set; }
 
         [Required]
         [StringLength(20, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-        [Display(Name = "Group Name")]
+        [Display(Name = "Numer grupy")]
         public string GroupName { get; set; }
 
         [Required]
-        [Display(Name = "Year Representative?")]
+        [Display(Name = "Jestem starostą?")]
         public bool IsYearRepresentative { get; set; }
     }
 }

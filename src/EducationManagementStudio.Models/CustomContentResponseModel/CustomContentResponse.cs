@@ -20,5 +20,7 @@ namespace EducationManagementStudio.Models.CustomContentResponseModel
         public DateTime UpdatedDate { get; set; }
 
         public string TextAreaResponse { get; set; }
+        public string FileName { get; set; }
+
     }
 }

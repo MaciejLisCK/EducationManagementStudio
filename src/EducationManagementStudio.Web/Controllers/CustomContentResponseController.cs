@@ -94,6 +94,34 @@ namespace EducationManagementStudio.Controllers
                 {
                     await file.CopyToAsync(fileStream);
                 }
+
+                var previousResponse = _db.CustomContentResponses
+                    .Include(ccr => ccr.Student)
+                    .Include(ccr => ccr.CustomContent)
+                    .SingleOrDefault(ccr => ccr.Student == student && ccr.CustomContent.Id == customContentFileId);
+
+                bool hasPreviousResponse = previousResponse != null;
+                if (!hasPreviousResponse)
+                {
+                    var customContentResponse = new CustomContentResponse();
+                    customContentResponse.UpdatedDate = DateTime.Now;
+                    customContentResponse.CustomContent = _db.CustomContent.Single(c => c.Id == customContentFileId);
+                    customContentResponse.Student = student;
+                    customContentResponse.FileName = fileName;
+
+                    _db.CustomContentResponses.Add(customContentResponse);
+                    _db.SaveChanges();
+                    return;
+                }
+
+                bool isNewer = previousResponse.UpdatedDate <= DateTime.Now;
+                if (isNewer)
+                {
+                    previousResponse.UpdatedDate = DateTime.Now;
+                    previousResponse.FileName = fileName;
+                    _db.SaveChanges();
+                    return;
+                }
             }
         }
 

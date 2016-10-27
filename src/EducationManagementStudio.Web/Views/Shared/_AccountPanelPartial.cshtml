@@ -11,14 +11,14 @@
 @if (isSignedIn)
 {
     <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Hello @user.FullName!</a></li>
-        <li><a asp-controller="Account" asp-action="Logout">Logout</a></li>
+        <li><a href="#">Witaj @user.FullName!</a></li>
+        <li><a asp-controller="Account" asp-action="Logout">Wyloguj</a></li>
     </ul>
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li><a asp-controller="Account" asp-action="Login">Login</a></li>
-        <li><a asp-controller="Account" asp-action="RegisterStudent">Register</a></li>
+        <li><a asp-controller="Account" asp-action="Login">Logowanie</a></li>
+        <li><a asp-controller="Account" asp-action="RegisterStudent">Rejestracja</a></li>
     </ul>
 }

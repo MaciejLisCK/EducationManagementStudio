@@ -67,13 +67,13 @@ namespace EducationManagementStudio.Services
                 CreateUserUploadFolder(userId);
         }
 
-
         public bool HasFile(string userId, int customContentId)
         {
-            if (!Directory.Exists(UploadFolderFullPath))
+            var userUploadPath = GetUserUploadPath(userId);
+
+            if (!Directory.Exists(userUploadPath))
                 return false;
 
-            var userUploadPath = Path.Combine(UploadFolderFullPath, userId);
             var userUploadDirectory = new DirectoryInfo(userUploadPath);
             var hasFileByNameWithoutException = userUploadDirectory.GetFiles()
                 .Any(f => Path.GetFileNameWithoutExtension(f.FullName) == customContentId.ToString());

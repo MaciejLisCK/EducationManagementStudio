@@ -14,8 +14,13 @@
 
 1. Zakaz korzystania z **telefonów komórkowych**.
 2. Zakaz korzystania ze stron internetowych innych niż dokumentacja, Wikipedia.
-3. Na blacie przed sobą można mieć wyłącznie: *zeszyt*, *przybory do pisania*, *__własnoręcznie__ napisane materiały*, *literaturę związaną z zajęciami*, *wydrukowaną dokumentację*.
-4. Spożywanie napojów i posiłków poza laboratorium, na przerwie.
+3. Spożywanie napojów i posiłków poza laboratorium, na przerwie.
+4. Na blacie przed sobą można mieć wyłącznie: 
+  * *zeszyt*, 
+  * *przybory do pisania*,
+  * *__własnoręcznie__ napisane materiały*,
+  * *literaturę związaną z zajęciami*,
+  * *wydrukowaną dokumentację*.
     </div>
 </div>
 
@@ -54,7 +59,7 @@
         var buttonHtml = String.Empty;
 
         if (customPage == null)
-            buttonHtml = String.Format(buttonTemplate, "btn-primary disabled", "");
+            buttonHtml = String.Format(buttonTemplate, "btn-default disabled ", "");
         else
             buttonHtml = String.Format(buttonTemplate, "btn-primary", $"/CustomPage/View/{customPage.Id}");
 

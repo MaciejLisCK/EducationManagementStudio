@@ -54,6 +54,17 @@ namespace EducationManagementStudio.Controllers
 
             return View(model);
         }
-    }
 
+        public async Task<IActionResult> Review(int id)
+        {
+            var customPage = await _db.CustomPage
+                .Include(cp => cp.CustomPagesToCustomContents)
+                .ThenInclude(cptcc => cptcc.CustomContent)
+                .ThenInclude(cc => cc.CustomContentResponses)
+                .ThenInclude(ccr => ccr.Student)
+                .SingleAsync(cp => cp.Id == id);
+
+            return View(customPage);
+        }
+    }
 }

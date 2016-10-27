@@ -9,12 +9,12 @@ namespace EducationManagementStudio.Models.AccountModels.ViewModels
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email Address")]
+        [Display(Name = "Adres e-mail")]
         [EmailAddress]
         public string Email { get; set; }
 
         [Required]
-        [Display(Name = "Password")]
+        [Display(Name = "Hasło")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
     }
