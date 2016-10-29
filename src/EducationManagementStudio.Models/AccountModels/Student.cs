@@ -1,5 +1,6 @@
 ﻿using EducationManagementStudio.Models.CourseModels;
 using EducationManagementStudio.Models.CustomContentResponseModel;
+using EducationManagementStudio.Models.CustomPageAccessibilityModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,7 +22,8 @@ namespace EducationManagementStudio.Models.AccountModels
 
         public virtual ICollection<CourseToStudent> CoursesToStudents { get; set; }
         public virtual ICollection<CustomContentResponse> CustomContentResponses { get; set; }
-        
+        public virtual ICollection<CustomPageAccessibility> CustomPageAccessibilities { get; set; }
+
         [NotMapped]
         public IEnumerable<Course> EnrolledCourses
         {

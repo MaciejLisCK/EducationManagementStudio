@@ -125,15 +125,30 @@ namespace EducationManagementStudio.Controllers
             }
         }
 
-        public class ApiRequestBase
+        [HttpPost("SetPoints")]
+        public async Task SetPoints([FromBody]SetPointsViewModel model)
         {
-            public DateTime DateSent { get; set; }
+            var customContentResponse = _db.CustomContentResponses
+                .Include(ccr => ccr.CustomContent)
+                .Include(ccr => ccr.Student)
+                .Single(ccr => ccr.CustomContent.Id == model.InputCustomContentId && ccr.Student.Id == model.StudentId);
+
+            customContentResponse.ReceivedPoints = model.Points;
+            await _db.SaveChangesAsync();
         }
 
-        public class CustomContentResponseRequest :ApiRequestBase
+        public class CustomContentResponseRequest
         {
             public string Value { get; set; }
             public int ComponentId { get; set; }
+            public DateTime DateSent { get; set; }
+        }
+
+        public class SetPointsViewModel
+        {
+            public string StudentId { get; set; }
+            public int InputCustomContentId { get; set; }
+            public float? Points { get; set; }
         }
     }
 }

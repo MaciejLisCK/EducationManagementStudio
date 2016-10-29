@@ -1,10 +1,17 @@
-﻿@model EducationManagementStudio.Models.CourseModels.Course
+﻿@model EducationManagementStudio.Models.CourseModels.ViewModels.ViewViewModel
 
+@using EducationManagementStudio.Models.AccountModels
 @using EducationManagementStudio.Models.CustomPageModels
+@using EducationManagementStudio.Models.CustomContentModels
 
+@inject UserManager<Student> studentManager
+@inject ICustomContentFileService customContentFileService
 
-<h1>@Model.Name</h1>
-<p class="lead">@Model.Description</p>
+@{
+    var student = Model.Student;
+}
+
+<h1>@Model.Course.Name</h1>
 <hr />
 
 <div class="alert alert-dismissible alert-warning">
@@ -24,9 +31,7 @@
     </div>
 </div>
 
-
-@await Html.PartialAsync("_CustomContent", Model.CustomContentDescription.ToList())
-
+@await Html.PartialAsync("_CustomContent", Model.Course.CustomContentDescription.ToList())
 
 <table class="table table-hover table-bordered">
     <thead>
@@ -39,29 +44,47 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var currentClass in Model.Classes)
+        @foreach (var currentClass in Model.Course.Classes)
         {
             <tr>
                 <td data-markdown="line" class="text-justify">@currentClass.Topic</td>
-                <td class="text-center" style="vertical-align: middle;">@RenderCustomPageLink(currentClass.Test)</td>
-                <td class="text-center" style="vertical-align: middle;">@RenderCustomPageLink(currentClass.Exercise)</td>
-                <td class="text-center" style="vertical-align: middle;">@RenderCustomPageLink(currentClass.Report)</td>
-                <td class="text-center" style="vertical-align: middle;">@RenderCustomPageLink(currentClass.NextClasses)</td>
+                <td class="text-center" style="vertical-align: middle;">@RenderCustomPageLink(currentClass.Test, student)</td>
+                <td class="text-center" style="vertical-align: middle;">
+                    <div>
+                        @RenderCustomPageLink(currentClass.Exercise, student)
+                    </div>
+                    <span class="label label-primary">
+                        @currentClass.Exercise?.Contents.SelectMany(c => c.CustomContentResponses.Where(ccr => ccr.Student.Id == student.Id)).Sum(ccr => ccr.ReceivedPoints)
+                        /
+                        @currentClass.Exercise?.Contents.Sum(c => c is InputCustomContent? ((InputCustomContent)c).MaxPoints : 0)
+                    </span>
+                </td>
+                <td class="text-center" style="vertical-align: middle;">@RenderCustomPageLink(currentClass.Report, student)</td>
+                <td class="text-center" style="vertical-align: middle;">@RenderCustomPageLink(currentClass.NextClasses, student)</td>
             </tr>
         }
     </tbody>
 </table>
 
 @functions {
-    public IHtmlContent RenderCustomPageLink(CustomPage customPage)
+    public IHtmlContent RenderCustomPageLink(CustomPage customPage, Student student)
     {
         var buttonTemplate = "<a class='btn btn-xs text-center {0}' role='button' href='{1}'>Rozpocznij</a>";
         var buttonHtml = String.Empty;
 
         if (customPage == null)
-            buttonHtml = String.Format(buttonTemplate, "btn-default disabled ", "");
-        else
+            return Html.Raw(String.Empty);
+
+        bool hasStudentAccess = customPage.CustomPageAccessibilities
+            .Any(cpa =>
+                (cpa.Student?.Id == student.Id || cpa.StudentGroup?.Id == student.Group.Id) &&
+                cpa.StartAccessDateTime < DateTime.Now && DateTime.Now < cpa.EndAccessDateTime
+                );
+
+        if(hasStudentAccess)
             buttonHtml = String.Format(buttonTemplate, "btn-primary", $"/CustomPage/View/{customPage.Id}");
+        else
+            buttonHtml = String.Format(buttonTemplate, "btn-default disabled ", "");
 
         return Html.Raw(buttonHtml);
     }

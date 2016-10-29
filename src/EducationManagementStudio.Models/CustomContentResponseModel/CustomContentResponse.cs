@@ -22,5 +22,6 @@ namespace EducationManagementStudio.Models.CustomContentResponseModel
         public string TextAreaResponse { get; set; }
         public string FileName { get; set; }
 
+        public float? ReceivedPoints { get; set; }
     }
 }

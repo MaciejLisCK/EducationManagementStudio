@@ -11,6 +11,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using EducationManagementStudio.Models.AccountModels;
 using Microsoft.EntityFrameworkCore;
+using EducationManagementStudio.Models.CustomPageModels.ViewModels;
 
 namespace EducationManagementStudio.Controllers
 {
@@ -40,15 +41,36 @@ namespace EducationManagementStudio.Controllers
 
         public IActionResult View(int id)
         {
-            var course = _db.Courses
+            var model = new ViewViewModel();
+            model.Course = _db.Courses
                 .Include(c => c.CustomContentDescription)
-                .Include(c => c.Classes).ThenInclude(c => c.Test)
-                .Include(c => c.Classes).ThenInclude(c => c.Exercise)
-                .Include(c => c.Classes).ThenInclude(c => c.Report)
-                .Include(c => c.Classes).ThenInclude(c => c.NextClasses)
+                .Include(c => c.Classes)
+                    .ThenInclude(c => c.Test)
+                .Include(c => c.Classes)
+                    .ThenInclude(c => c.Exercise)
+                    .ThenInclude(cp => cp.CustomPagesToCustomContents)
+                    .ThenInclude(cptcc => cptcc.CustomContent)
+                    .ThenInclude(cc => cc.CustomContentResponses)
+                    .ThenInclude(ccr => ccr.Student)
+                .Include(c => c.Classes)
+                    .ThenInclude(c => c.Exercise)
+                    .ThenInclude(cp => cp.CustomPageAccessibilities)
+                    .ThenInclude(cpa => cpa.Student)
+                .Include(c => c.Classes)
+                    .ThenInclude(c => c.Exercise)
+                    .ThenInclude(cp => cp.CustomPageAccessibilities)
+                    .ThenInclude(cpa => cpa.StudentGroup)
+                .Include(c => c.Classes)
+                    .ThenInclude(c => c.Report)
+                .Include(c => c.Classes)
+                    .ThenInclude(c => c.NextClasses)
                 .SingleOrDefault(c => c.Id == id);
 
-            return View(course);
+            model.Student = _db.Student
+                .Include(s => s.Group)
+                .Single(s => s.UserName == User.Identity.Name);
+
+            return View(model);
         }
 
         public IActionResult Add()

@@ -10,5 +10,7 @@ namespace EducationManagementStudio.Models.CustomContentModels
     {
         [Required]
         public string Label { get; set; }
+
+        public float MaxPoints { get; set; }
     }
 }

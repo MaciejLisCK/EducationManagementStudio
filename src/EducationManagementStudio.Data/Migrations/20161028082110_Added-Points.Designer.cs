@@ -8,9 +8,10 @@ using EducationManagementStudio.Data;
 namespace EducationManagementStudio.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161028082110_Added-Points")]
+    partial class AddedPoints
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -239,32 +240,6 @@ namespace EducationManagementStudio.Data.Migrations
                     b.HasIndex("StudentId");
 
                     b.ToTable("CustomContentResponses");
-                });
-
-            modelBuilder.Entity("EducationManagementStudio.Models.CustomPageAccessibilityModels.CustomPageAccessibility", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("CustomPageId");
-
-                    b.Property<DateTime>("EndAccessDateTime");
-
-                    b.Property<DateTime>("StartAccessDateTime");
-
-                    b.Property<int?>("StudentGroupId");
-
-                    b.Property<string>("StudentId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomPageId");
-
-                    b.HasIndex("StudentGroupId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("CustomPageAccessibilities");
                 });
 
             modelBuilder.Entity("EducationManagementStudio.Models.CustomPageModels.CustomPage", b =>
@@ -588,21 +563,6 @@ namespace EducationManagementStudio.Data.Migrations
                         .WithMany("CustomContentResponses")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("EducationManagementStudio.Models.CustomPageAccessibilityModels.CustomPageAccessibility", b =>
-                {
-                    b.HasOne("EducationManagementStudio.Models.CustomPageModels.CustomPage", "CustomPage")
-                        .WithMany("CustomPageAccessibilities")
-                        .HasForeignKey("CustomPageId");
-
-                    b.HasOne("EducationManagementStudio.Models.AccountModels.StudentGroup", "StudentGroup")
-                        .WithMany("CustomPageAccessibilities")
-                        .HasForeignKey("StudentGroupId");
-
-                    b.HasOne("EducationManagementStudio.Models.AccountModels.Student", "Student")
-                        .WithMany("CustomPageAccessibilities")
-                        .HasForeignKey("StudentId");
                 });
 
             modelBuilder.Entity("EducationManagementStudio.Models.CustomPageModels.CustomPageToCustomContent", b =>

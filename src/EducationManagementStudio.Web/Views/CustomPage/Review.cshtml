@@ -3,47 +3,88 @@
 @using EducationManagementStudio.Models.CustomContentModels
 
 
-@foreach (var content in Model.Contents.Where(c=>c is InputCustomContent))
+@foreach (var content in Model.Contents.Where(c => c is InputCustomContent).Cast<InputCustomContent>())
 {
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h3 class="panel-title">Content @content.Id</h3>
+            <h3 class="panel-title">@content.Id - @content.Label <small>[@content.MaxPoints]</small></h3>
         </div>
         <div class="panel-body">
             @foreach (var contentResponse in content.CustomContentResponses)
             {
-                @if (content is CustomContentTextArea)
-                {
-                    <div class="panel panel-primary">
-                        <div class="panel-body">
-                            <dl class="dl-horizontal">
-                                <dt>ContentUser</dt>
-                                <dd>@contentResponse.Student.UserName</dd>
-                                <dt>User</dt>
-                                <dd>@contentResponse.Student.FullName</dd>
-                                <dt>ContentResponse</dt>
-                                <dd>@contentResponse.TextAreaResponse</dd>
-                            </dl>
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+                        <div class="row">
+                            @if (content is CustomContentTextArea)
+                            {
+                                <div class="col-md-10">
+                                    <dl class="dl-horizontal">
+                                        <dt>ContentUser</dt>
+                                        <dd>@contentResponse.Student.UserName</dd>
+                                        <dt>User</dt>
+                                        <dd>@contentResponse.Student.FullName</dd>
+                                        <dt>ContentResponse</dt>
+                                        <dd><pre>@contentResponse.TextAreaResponse</pre></dd>
+                                    </dl>
+                                </div>
+                            }
+                            else if (content is CustomContentFile)
+                            {
+                                <div class="col-md-10">
+                                    <dl class="dl-horizontal">
+                                        <dt>ContentUser</dt>
+                                        <dd>@contentResponse.Student.UserName</dd>
+                                        <dt>User</dt>
+                                        <dd>@contentResponse.Student.FullName</dd>
+                                        <dt>FileName</dt>
+                                        <dd>@contentResponse.FileName</dd>
+                                    </dl>
+                                    <img src="~/uploads/custom-content/@contentResponse.Student.Id/@contentResponse.FileName" class="img-responsive img-thumbnail" />
+                                </div>
+                            }
+                            <div class="col-md-2">
+                                Liczba punktów: <input type="number" min="0" max="@content.MaxPoints" data-studentId="@contentResponse.Student.Id" data-inputCustomContentId="@content.Id" value="@contentResponse.ReceivedPoints" />
+                            </div>
                         </div>
                     </div>
-                }
-                else if (content is CustomContentFile)
-                {
-                    <div class="panel panel-primary">
-                        <div class="panel-body">
-                            <dl class="dl-horizontal">
-                                <dt>ContentUser</dt>
-                                <dd>@contentResponse.Student.UserName</dd>
-                                <dt>User</dt>
-                                <dd>@contentResponse.Student.FullName</dd>
-                                <dt>FileName</dt>
-                                <dd>@contentResponse.FileName</dd>
-                            </dl>
-                            <img src="~/uploads/custom-content/@contentResponse.Student.Id/@contentResponse.FileName" class="img-responsive img-thumbnail" />
-                        </div>
-                    </div>
-                }
+                </div>
             }
         </div>
     </div>
+}
+
+@section scripts {
+    <script>
+        ;(function () {
+            var numberInputs = document.querySelectorAll("input[type=number]");
+            for (var i = 0; i < numberInputs.length; i++) {
+                var numberInput = numberInputs[i];
+                numberInput.onmousewheel = function () { };
+            }
+        })();
+    </script>
+    <script>
+        ;(function () {
+            var numberInputs = document.querySelectorAll("input[type=number]");
+            for (var i = 0; i < numberInputs.length; i++) {
+                var numberInput = numberInputs[i];
+                numberInput.addEventListener("change", function (event) {
+                    var request = new XMLHttpRequest();
+                    var inputElement = event.srcElement;
+
+
+                    var data = {
+                        studentId: inputElement.attributes['data-studentId'].value,
+                        inputCustomContentId: inputElement.attributes['data-inputCustomContentId'].value,
+                        points: inputElement.value
+                    };
+
+                    request.open('POST', '/api/CustomContentResponse/SetPoints');
+                    request.setRequestHeader('Content-Type', 'application/json');
+                    request.send(JSON.stringify(data));
+                }, false);
+            }
+        })();
+    </script>
+
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using EducationManagementStudio.Models.CourseModels;
+using EducationManagementStudio.Models.CustomPageAccessibilityModels;
 
 namespace EducationManagementStudio.Models.AccountModels
 {
@@ -16,5 +17,6 @@ namespace EducationManagementStudio.Models.AccountModels
 
         public virtual ICollection<Student> Students { get; set; }
         public virtual ICollection<CourseToGroup> CoursesToGroups { get; set; }
+        public virtual ICollection<CustomPageAccessibility> CustomPageAccessibilities { get; set; }
     }
 }

@@ -10,6 +10,7 @@ using EducationManagementStudio.Models.CustomPageModels;
 using Microsoft.EntityFrameworkCore.Metadata;
 using EducationManagementStudio.Models.CustomContentModels;
 using EducationManagementStudio.Models.CustomContentResponseModel;
+using EducationManagementStudio.Models.CustomPageAccessibilityModels;
 
 namespace EducationManagementStudio.Data
 {
@@ -31,10 +32,9 @@ namespace EducationManagementStudio.Data
         public DbSet<CustomContentPanel> CustomPagePanelContent { get; set; }
         public DbSet<CustomContentAlert> CustomPageAlertContent { get; set; }
         public DbSet<CustomContentTextArea> CustomPageTextAreaContent { get; set; }
+        public DbSet<CustomPageAccessibility> CustomPageAccessibilities { get; set; }
         public DbSet<CustomContentFile> CustomContentFileContent { get; set; }
         public DbSet<CustomContentResponse> CustomContentResponses { get; set; }
-        
-
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -54,6 +54,8 @@ namespace EducationManagementStudio.Data
             foreach (var courseToStudentForeignKey in modelBuilder.Entity<CourseToGroup>().Metadata.GetForeignKeys())
                 courseToStudentForeignKey.DeleteBehavior = DeleteBehavior.Restrict;
 
+            foreach (var customPageForeignKey in modelBuilder.Entity<CustomPageAccessibility>().Metadata.GetForeignKeys())
+                customPageForeignKey.DeleteBehavior = DeleteBehavior.Restrict;
         }
     }
 }

@@ -38,7 +38,8 @@
             @foreach (var course in Model)
             {
                 <a asp-controller="Course" asp-action="View" asp-route-id="@course.Id" class="list-group-item">
-                    @course.Name
+                    <h4 class="list-group-item-heading">@course.Name</h4>
+                    <p class="list-group-item-text" data-markdown="content">@course.Description</p>
                 </a>
             }
         </div>

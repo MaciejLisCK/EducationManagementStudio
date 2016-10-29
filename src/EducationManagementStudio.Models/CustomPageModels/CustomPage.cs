@@ -1,4 +1,5 @@
 ﻿using EducationManagementStudio.Models.CustomContentModels;
+using EducationManagementStudio.Models.CustomPageAccessibilityModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,6 +15,7 @@ namespace EducationManagementStudio.Models.CustomPageModels
         [Required, StringLength(256)]
         public string Title { get; set; }
         public virtual ICollection<CustomPageToCustomContent> CustomPagesToCustomContents { get; set; }
+        public virtual ICollection<CustomPageAccessibility> CustomPageAccessibilities { get; set; }
 
         [NotMapped]
         public IEnumerable<CustomContent> Contents
