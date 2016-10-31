@@ -1,0 +1,118 @@
+﻿@model EducationManagementStudio.Models.CustomPageAccessibilityModels.ViewModels.IndexViewModel
+
+@using EducationManagementStudio.Models.CustomPageModels
+@using EducationManagementStudio.Models.AccountModels
+
+<h1>Custom Page Accessibilities Manage</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>Add/Edit</h3>
+        <form asp-controller="CustomPageAccessibility" asp-action="Add" method="post" class="form-horizontal">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CustomPageAccessibility.CustomPageId" class="col-md-6 control-label"></label>
+                <div class="col-md-6">
+                    <select asp-for="CustomPageAccessibility.CustomPageId" asp-items="@(new SelectList(Model.CustomPages, nameof(CustomPage.Id), nameof(CustomPage.Title)))" class="form-control">
+                        <option>Please select one</option>
+                    </select>
+                    <span asp-validation-for="CustomPageAccessibility.CustomPageId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="CustomPageAccessibility.StudentId" class="col-md-6 control-label"></label>
+                <div class="col-md-6">
+                    <select asp-for="CustomPageAccessibility.StudentId" asp-items="@(new SelectList(Model.Students, nameof(Student.Id), nameof(Student.FullName)))" class="form-control">
+                        <option>Please select one</option>
+                    </select>
+                    <span asp-validation-for="CustomPageAccessibility.StudentId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="CustomPageAccessibility.StudentGroupId" class="col-md-6 control-label"></label>
+                <div class="col-md-6">
+                    <select asp-for="CustomPageAccessibility.StudentGroupId" asp-items="@(new SelectList(Model.StudentGroups, nameof(StudentGroup.Id), nameof(StudentGroup.Name)))" class="form-control">
+                        <option>Please select one</option>
+                    </select>
+                    <span asp-validation-for="CustomPageAccessibility.StudentGroupId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="CustomPageAccessibility.StartAccessDateTime" class="col-md-6 control-label"></label>
+                <div class="col-md-6">
+                    <input type="datetime-local" asp-for="CustomPageAccessibility.StartAccessDateTime" />
+                    <span asp-validation-for="CustomPageAccessibility.StartAccessDateTime" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="CustomPageAccessibility.EndAccessDateTime" class="col-md-6 control-label"></label>
+                <div class="col-md-6">
+                    <input type="datetime-local" asp-for="CustomPageAccessibility.EndAccessDateTime" />
+                    <span asp-validation-for="CustomPageAccessibility.EndAccessDateTime" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-6 col-md-6">
+                    <button type="submit" class="btn btn-primary">Add/Edit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <h3>Existing Accessibilities</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        Custom Page Title
+                    </th>
+                    <th>
+                        Student Name
+                    </th>
+                    <th>
+                        Group
+                    </th>
+                    <th>
+                        Start
+                    </th>
+                    <th>
+                        End
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var accessibility in Model.CustomPageAccessibilities)
+                {
+                    <tr>
+                        <td>
+                            @accessibility.CustomPage.Title
+                        </td>
+                        <td>
+                            @accessibility.Student?.FullName
+                        </td>
+                        <td>
+                            @accessibility.StudentGroup?.Name
+                        </td>
+                        <td>
+                            @accessibility.StartAccessDateTime.ToUniversalTime()
+                        </td>
+                        <td>
+                            @accessibility.EndAccessDateTime.ToUniversalTime()
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button type="button" class="btn btn-default">Modify</button>
+                                <button type="button" class="btn btn-danger">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

@@ -39,10 +39,9 @@ namespace EducationManagementStudio.Controllers
 
             bool isTeacherLogged = currentTeacher != null;
             if (isTeacherLogged)
-                return RedirectToAction<CourseController>(nameof(CourseController.ListForTeacher));
+                return RedirectToAction<HomeController>(nameof(HomeController.AdminDashboard));
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction<CourseController>(nameof(AccountController.Login));
-
 
             var currentStudent = await _studentManager.GetUserAsync(HttpContext.User);
 
@@ -67,6 +66,11 @@ namespace EducationManagementStudio.Controllers
             var appliedCourses = appliedCoursesByUser.Union(appliedCoursesByGroup).ToList();
 
             return View(appliedCourses);
+        }
+
+        public IActionResult AdminDashboard()
+        {
+            return View();
         }
     }
 }

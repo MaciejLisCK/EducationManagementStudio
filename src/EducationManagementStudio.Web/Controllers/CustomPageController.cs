@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using EducationManagementStudio.Models.CustomPageModels.ViewModels;
 using EducationManagementStudio.Models.CustomPageModels;
 using EducationManagementStudio.Models.CustomContentModels;
+using System.Security.Claims;
 
 namespace EducationManagementStudio.Controllers
 {
@@ -23,6 +24,28 @@ namespace EducationManagementStudio.Controllers
 
         public async Task<IActionResult> View(int id)
         {
+            bool isCustomPageUsedAsTestOrExercise = await _db.Classes
+                .Include(c => c.Test)
+                .Include(c => c.Exercise)
+                .AnyAsync(c => c.Test.Id == id || c.Exercise.Id == id);
+
+            if (isCustomPageUsedAsTestOrExercise)
+            {
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                bool hasAccess = await _db.CustomPageAccessibilities
+                    .Include(cpa => cpa.CustomPage)
+                    .Include(cpa => cpa.Student)
+                    .Include(cpa => cpa.StudentGroup)
+                    .ThenInclude(cpa => cpa.Students)
+                    .AnyAsync(cpa =>
+                        cpa.CustomPage.Id == id &&
+                        (cpa.Student.Id == userId || cpa.StudentGroup.Students.Any(s => s.Id == userId)) &&
+                        cpa.StartAccessDateTime < DateTime.Now && DateTime.Now < cpa.EndAccessDateTime
+                        );
+
+                if (!hasAccess)
+                    return Content("No access");
+            }
 
             var customPage = await _db.CustomPage
                 .Include(cp => cp.CustomPagesToCustomContents)

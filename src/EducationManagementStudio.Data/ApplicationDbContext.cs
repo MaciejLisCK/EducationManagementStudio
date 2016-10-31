@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using EducationManagementStudio.Models.CustomContentModels;
 using EducationManagementStudio.Models.CustomContentResponseModel;
 using EducationManagementStudio.Models.CustomPageAccessibilityModels;
+using EducationManagementStudio.Models.ClassModels;
 
 namespace EducationManagementStudio.Data
 {
@@ -35,6 +36,8 @@ namespace EducationManagementStudio.Data
         public DbSet<CustomPageAccessibility> CustomPageAccessibilities { get; set; }
         public DbSet<CustomContentFile> CustomContentFileContent { get; set; }
         public DbSet<CustomContentResponse> CustomContentResponses { get; set; }
+
+        public DbSet<Class> Classes { get; set; } 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
